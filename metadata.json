@@ -1,0 +1,6 @@
+{
+  "name": "Cybercrime Cash Withdrawal Predictive Intelligence Platform",
+  "description": "Predictive analytics framework for cybercrime complaints to forecast likely cash withdrawal locations and generate actionable intelligence for proactive law enforcement intervention.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
