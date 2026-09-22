@@ -158,51 +158,51 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
-      <div className="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden my-6 animate-in fade-in zoom-in-95">
+      <div className="relative w-full max-w-lg glass-card rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden my-6 animate-in fade-in zoom-in-95">
         {/* National Portal Top Bar */}
-        <div className="bg-emerald-800 text-white px-5 py-2 flex items-center justify-between text-xs">
-          <div className="flex items-center gap-2 font-semibold">
+        <div className="bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white px-5 py-2.5 flex items-center justify-between text-xs shadow-sm">
+          <div className="flex items-center gap-2 font-bold tracking-wider">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>NATIONAL CYBER CRIME REPORTING PORTAL (NCRP)</span>
+            <span className="uppercase text-[11px]">NATIONAL CYBER CRIME REPORTING PORTAL (NCRP)</span>
           </div>
-          <span className="text-[11px] text-emerald-200 font-mono">1930 HELPLINE</span>
+          <span className="text-[11px] text-blue-200 font-mono font-bold">1930 HELPLINE</span>
         </div>
 
         {/* Modal Header */}
-        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-white/70">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#1e3a8a] flex items-center justify-center font-bold shadow-xs">
               <Shield className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-base text-slate-900 dark:text-white">
+              <h3 className="font-bold text-base text-slate-900">
                 Citizen Cyber Crime Portal
               </h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-slate-500">
                 Victim Access & Complaint Management System
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="grid grid-cols-4 border-b border-slate-200 dark:border-slate-800 text-xs font-semibold bg-slate-50 dark:bg-slate-900/50">
+        <div className="grid grid-cols-4 border-b border-slate-200 text-xs font-semibold bg-slate-50/80">
           <button
             onClick={() => {
               setActiveTab('login');
               setError(null);
               setInfoMessage(null);
             }}
-            className={`py-3 text-center border-b-2 transition-colors ${
+            className={`py-3 text-center border-b-2 transition-colors cursor-pointer ${
               activeTab === 'login'
-                ? 'border-emerald-600 text-emerald-700 dark:text-emerald-400 bg-white dark:bg-slate-900'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'border-[#2563eb] text-[#1e3a8a] bg-white font-bold'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             Sign In
@@ -213,10 +213,10 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
               setError(null);
               setInfoMessage(null);
             }}
-            className={`py-3 text-center border-b-2 transition-colors ${
+            className={`py-3 text-center border-b-2 transition-colors cursor-pointer ${
               activeTab === 'register'
-                ? 'border-emerald-600 text-emerald-700 dark:text-emerald-400 bg-white dark:bg-slate-900'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'border-[#2563eb] text-[#1e3a8a] bg-white font-bold'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             Register
@@ -227,10 +227,10 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
               setError(null);
               setInfoMessage(null);
             }}
-            className={`py-3 text-center border-b-2 transition-colors ${
+            className={`py-3 text-center border-b-2 transition-colors cursor-pointer ${
               activeTab === 'otp'
-                ? 'border-emerald-600 text-emerald-700 dark:text-emerald-400 bg-white dark:bg-slate-900'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'border-[#2563eb] text-[#1e3a8a] bg-white font-bold'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             OTP Login
@@ -241,10 +241,10 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
               setError(null);
               setInfoMessage(null);
             }}
-            className={`py-3 text-center border-b-2 transition-colors ${
+            className={`py-3 text-center border-b-2 transition-colors cursor-pointer ${
               activeTab === 'forgot'
-                ? 'border-emerald-600 text-emerald-700 dark:text-emerald-400 bg-white dark:bg-slate-900'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'border-[#2563eb] text-[#1e3a8a] bg-white font-bold'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             Reset PIN
@@ -253,14 +253,14 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
 
         {/* Demo Fast Fill Pill */}
         <div className="px-5 pt-4">
-          <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs flex items-center justify-between gap-2">
-            <span className="text-slate-600 dark:text-slate-300 text-[11px] font-medium">
-              Demo Victim: <span className="font-bold text-slate-900 dark:text-white">Ananya Sharma</span> (₹85,000 lost)
+          <div className="p-2.5 rounded-xl bg-blue-50/70 border border-blue-100 text-xs flex items-center justify-between gap-2">
+            <span className="text-slate-600 text-[11px] font-medium">
+              Demo Victim: <span className="font-bold text-[#1e3a8a]">Ananya Sharma</span> (₹85,000 lost)
             </span>
             <button
               type="button"
               onClick={() => loadDemoVictim('ananya.sharma@example.com', 'victim@123', '9876543210')}
-              className="px-2 py-1 rounded bg-emerald-700 hover:bg-emerald-800 text-white text-[10px] font-bold transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] hover:from-blue-900 hover:to-blue-700 text-white text-[10px] font-bold transition-all shadow-xs cursor-pointer"
             >
               Fill Credentials
             </button>
@@ -270,13 +270,13 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
         {/* Notifications & Error messages */}
         <div className="px-5 pt-3">
           {error && (
-            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-start gap-2">
+            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <span>{error}</span>
             </div>
           )}
           {infoMessage && (
-            <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs flex items-start gap-2">
+            <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-start gap-2">
               <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
               <span>{infoMessage}</span>
             </div>
@@ -287,7 +287,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
         {activeTab === 'login' && (
           <form onSubmit={handleLogin} className="p-5 space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Registered Email or Mobile Number
               </label>
               <div className="relative">
@@ -298,14 +298,14 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                   value={loginIdentifier}
                   onChange={(e) => setLoginIdentifier(e.target.value)}
                   placeholder="e.g. ananya.sharma@example.com or 9876543210"
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                 />
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <label className="block text-xs font-semibold text-slate-700">
                   Password / Account PIN
                 </label>
                 <button
@@ -314,7 +314,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                     setForgotIdentifier(loginIdentifier);
                     setActiveTab('forgot');
                   }}
-                  className="text-[11px] text-emerald-700 dark:text-emerald-400 hover:underline"
+                  className="text-[11px] text-[#2563eb] hover:underline cursor-pointer"
                 >
                   Forgot Password?
                 </button>
@@ -327,7 +327,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                 />
               </div>
             </div>
@@ -335,7 +335,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 disabled:opacity-60 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md shadow-emerald-700/20 cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] hover:from-blue-900 hover:to-blue-700 disabled:opacity-60 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-900/20 cursor-pointer"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -354,9 +354,9 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                   setOtpIdentifier(loginIdentifier);
                   setActiveTab('otp');
                 }}
-                className="text-xs text-slate-600 dark:text-slate-400 hover:text-emerald-600 font-medium"
+                className="text-xs text-slate-600 hover:text-[#2563eb] font-medium cursor-pointer"
               >
-                Prefer mobile OTP login? <span className="text-emerald-700 dark:text-emerald-400 font-semibold underline">Login with OTP</span>
+                Prefer mobile OTP login? <span className="text-[#2563eb] font-semibold underline">Login with OTP</span>
               </button>
             </div>
           </form>
@@ -366,7 +366,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
         {activeTab === 'register' && (
           <form onSubmit={handleRegister} className="p-5 space-y-3 max-h-[460px] overflow-y-auto">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Full Legal Name <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
@@ -377,14 +377,14 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                   value={regName}
                   onChange={(e) => setRegName(e.target.value)}
                   placeholder="e.g. Ramesh Chandra Verma"
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Mobile Number <span className="text-rose-500">*</span>
                 </label>
                 <div className="relative">
@@ -395,13 +395,13 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                     value={regMobile}
                     onChange={(e) => setRegMobile(e.target.value)}
                     placeholder="10-Digit Mobile"
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Email Address <span className="text-rose-500">*</span>
                 </label>
                 <div className="relative">
@@ -412,7 +412,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
                     placeholder="victim@email.com"
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -420,7 +420,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Password <span className="text-rose-500">*</span>
                 </label>
                 <div className="relative">
@@ -431,13 +431,13 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
                     placeholder="At least 6 chars"
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Aadhaar Card (Optional)
                 </label>
                 <div className="relative">
@@ -447,14 +447,14 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                     value={regAadhaar}
                     onChange={(e) => setRegAadhaar(e.target.value)}
                     placeholder="XXXX-XXXX-XXXX"
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                   />
                 </div>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Residential Address
               </label>
               <div className="relative">
@@ -464,32 +464,32 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                   value={regAddress}
                   onChange={(e) => setRegAddress(e.target.value)}
                   placeholder="Flat/House, Street, Area"
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   City
                 </label>
                 <input
                   type="text"
                   value={regCity}
                   onChange={(e) => setRegCity(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
                   State
                 </label>
                 <input
                   type="text"
                   value={regState}
                   onChange={(e) => setRegState(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                 />
               </div>
             </div>
@@ -497,7 +497,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 disabled:opacity-60 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md shadow-emerald-700/20 cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] hover:from-blue-900 hover:to-blue-700 disabled:opacity-60 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-900/20 cursor-pointer"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -515,7 +515,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
         {activeTab === 'otp' && (
           <form onSubmit={handleVerifyOtpLogin} className="p-5 space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Registered Mobile or Email
               </label>
               <div className="flex gap-2">
@@ -527,14 +527,14 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                     value={otpIdentifier}
                     onChange={(e) => setOtpIdentifier(e.target.value)}
                     placeholder="9876543210 or email"
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                   />
                 </div>
                 <button
                   type="button"
                   disabled={loading}
                   onClick={() => handleSendOtp(otpIdentifier, false)}
-                  className="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-colors whitespace-nowrap cursor-pointer"
+                  className="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition-colors whitespace-nowrap cursor-pointer"
                 >
                   {otpSent ? 'Resend OTP' : 'Send OTP'}
                 </button>
@@ -543,10 +543,10 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
 
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                <label className="block text-xs font-semibold text-slate-700">
                   Enter 6-Digit OTP Code
                 </label>
-                <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-medium">
+                <span className="text-[10px] text-[#2563eb] font-medium">
                   Hint: Use code 193001
                 </span>
               </div>
@@ -559,7 +559,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                   value={otpCode}
                   onChange={(e) => setOtpCode(e.target.value)}
                   placeholder="193001"
-                  className="w-full pl-9 pr-3 py-2 text-xs font-mono tracking-widest rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="w-full pl-9 pr-3 py-2 text-xs font-mono tracking-widest rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                 />
               </div>
             </div>
@@ -567,7 +567,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 disabled:opacity-60 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md shadow-emerald-700/20 cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] hover:from-blue-900 hover:to-blue-700 disabled:opacity-60 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-900/20 cursor-pointer"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -585,7 +585,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
         {activeTab === 'forgot' && (
           <form onSubmit={handleForgotPassword} className="p-5 space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Registered Mobile or Email
               </label>
               <div className="flex gap-2">
@@ -595,13 +595,13 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                   value={forgotIdentifier}
                   onChange={(e) => setForgotIdentifier(e.target.value)}
                   placeholder="e.g. ananya.sharma@example.com"
-                  className="flex-1 px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                  className="flex-1 px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
                 />
                 <button
                   type="button"
                   disabled={loading}
                   onClick={() => handleSendOtp(forgotIdentifier, true)}
-                  className="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-colors whitespace-nowrap cursor-pointer"
+                  className="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition-colors whitespace-nowrap cursor-pointer"
                 >
                   Send OTP
                 </button>
@@ -609,7 +609,7 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Verification OTP Code
               </label>
               <input
@@ -619,12 +619,12 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                 value={forgotOtp}
                 onChange={(e) => setForgotOtp(e.target.value)}
                 placeholder="193001"
-                className="w-full px-3 py-2 text-xs font-mono tracking-widest rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                className="w-full px-3 py-2 text-xs font-mono tracking-widest rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 New Secure Password
               </label>
               <input
@@ -633,14 +633,14 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
                 value={forgotNewPassword}
                 onChange={(e) => setForgotNewPassword(e.target.value)}
                 placeholder="New password (minimum 6 chars)"
-                className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:ring-2 focus:ring-[#2563eb] focus:outline-hidden"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 disabled:opacity-60 text-white font-bold text-xs flex items-center justify-center gap-2 transition-colors shadow-md shadow-emerald-700/20 cursor-pointer"
+              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] hover:from-blue-900 hover:to-blue-700 disabled:opacity-60 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-900/20 cursor-pointer"
             >
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -655,8 +655,8 @@ export const VictimAuthModal: React.FC<VictimAuthModalProps> = ({ isOpen, onClos
         )}
 
         {/* Footer Note */}
-        <div className="p-4 bg-slate-50 dark:bg-slate-800/40 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 text-center flex items-center justify-center gap-1.5">
-          <Lock className="w-3.5 h-3.5 text-emerald-600" />
+        <div className="p-4 bg-slate-50/80 border-t border-slate-100 text-[11px] text-slate-500 text-center flex items-center justify-center gap-1.5">
+          <Lock className="w-3.5 h-3.5 text-[#10b981]" />
           <span>256-bit encrypted session strictly compliant with IT Act 2000 and RBI guidelines.</span>
         </div>
       </div>

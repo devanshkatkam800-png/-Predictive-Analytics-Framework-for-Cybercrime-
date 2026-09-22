@@ -8,7 +8,6 @@ import { IntelligenceReportsSection } from './components/IntelligenceReportsSect
 import { IntelligenceReportModal } from './components/IntelligenceReportModal';
 import { HistoricalDatasetSection } from './components/HistoricalDatasetSection';
 import { AnalyticsSection } from './components/AnalyticsSection';
-import { SihPredictiveDashboard } from './components/sih/SihPredictiveDashboard';
 import { VictimPortalView } from './components/victim/VictimPortalView';
 import { api } from './services/api';
 import {
@@ -42,11 +41,6 @@ export default function App() {
   const [authModalOpen, setAuthModalOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Theme: Modern white theme default, with dark mode toggle
-  const [darkMode, setDarkMode] = useState<boolean>(() => {
-    return localStorage.getItem('mha_dark_mode') === 'true';
-  });
-
   // Portal Mode: 'officer' (MHA Law Enforcement) or 'victim' (Citizen Grievance Redressal)
   const [portalMode, setPortalMode] = useState<'officer' | 'victim'>('officer');
 
@@ -66,20 +60,11 @@ export default function App() {
   const [activeReportModal, setActiveReportModal] = useState<IntelligenceReport | null>(null);
   const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'alert' } | null>(null);
 
-  // Synchronize Dark Mode class on HTML root element
+  // Permanently enforce light mode on HTML root element
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('mha_dark_mode', 'true');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('mha_dark_mode', 'false');
-    }
-  }, [darkMode]);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+    document.documentElement.classList.remove('dark');
+    localStorage.removeItem('mha_dark_mode');
+  }, []);
 
   const showToast = (text: string, type: 'success' | 'alert' = 'success') => {
     setToastMessage({ text, type });
@@ -210,9 +195,9 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-slate-950 flex flex-col items-center justify-center text-slate-700 dark:text-slate-200">
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center text-slate-700">
         <div className="w-10 h-10 border-3 border-blue-700 border-t-transparent rounded-full animate-spin mb-4" />
-        <div className="text-sm font-bold tracking-wider uppercase text-blue-900 dark:text-blue-400">
+        <div className="text-sm font-bold tracking-wider uppercase text-[#1e3a8a]">
           MINISTRY OF HOME AFFAIRS (MHA)
         </div>
         <p className="text-xs text-slate-500 mt-1">
@@ -223,7 +208,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col transition-colors">
+    <div className="min-h-screen bg-gov-gradient text-slate-900 flex flex-col transition-colors">
       {/* Toast Notification Banner */}
       {toastMessage && (
         <div className="fixed bottom-5 right-5 z-50 animate-in fade-in slide-in-from-bottom-3 max-w-md">
@@ -253,8 +238,6 @@ export default function App() {
         onLogout={handleLogout}
         notifications={notifications}
         onNotificationClick={handleNotificationClick}
-        darkMode={darkMode}
-        onToggleDarkMode={toggleDarkMode}
         portalMode={portalMode}
         setPortalMode={setPortalMode}
       />
@@ -276,29 +259,29 @@ export default function App() {
           !currentUser ? (
             /* Unauthenticated Officer Gateway */
             <div className="max-w-xl mx-auto my-8">
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-xl text-center">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-700 text-white mb-4 shadow-lg shadow-blue-700/25">
+              <div className="glass-card border border-slate-200/90 rounded-3xl p-8 sm:p-10 shadow-xl shadow-slate-200/50 text-center bg-white/95">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[#1e3a8a] to-[#2563eb] text-white mb-4 shadow-lg shadow-blue-900/25">
                   <Shield className="w-7 h-7 text-white" />
                 </div>
 
-                <div className="text-[11px] font-bold uppercase tracking-widest text-blue-700 dark:text-blue-400 mb-1">
+                <div className="text-[11px] font-bold uppercase tracking-widest text-[#1e3a8a] mb-1">
                   GOVERNMENT OF INDIA &bull; MINISTRY OF HOME AFFAIRS
                 </div>
 
-                <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+                <h1 className="text-2xl font-black text-slate-900 tracking-tight">
                   Cybercrime Cash Withdrawal Predictive Intelligence Platform
                 </h1>
 
-                <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
                   A specialized analytical decision-support framework that evaluates cybercrime complaints and transaction trails to forecast likely cash withdrawal locations and high-risk ATM clusters in advance, enabling timely law enforcement interception.
                 </p>
 
-                <div className="mt-6 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-left text-xs space-y-2">
-                  <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                    <Lock className="w-3.5 h-3.5 text-blue-600" />
+                <div className="mt-6 p-4 rounded-2xl bg-slate-50 border border-slate-200/80 text-left text-xs space-y-2">
+                  <div className="font-bold text-slate-900 flex items-center gap-1.5">
+                    <Lock className="w-3.5 h-3.5 text-[#2563eb]" />
                     <span>Authorized Law Enforcement Access Only</span>
                   </div>
-                  <p className="text-slate-500 dark:text-slate-400 text-[11px]">
+                  <p className="text-slate-500 text-[11px]">
                     This platform is restricted to Investigating Officers and Cyber Cell Administrators. Citizen victims should use the dedicated Citizen Redressal Portal.
                   </p>
                 </div>
@@ -307,7 +290,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => setAuthModalOpen(true)}
-                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-700/20 cursor-pointer"
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] hover:from-blue-900 hover:to-blue-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-900/20 cursor-pointer"
                   >
                     <span>Officer Sign In / Register</span>
                     <ArrowRight className="w-4 h-4" />
@@ -316,7 +299,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={() => setPortalMode('victim')}
-                    className="w-full sm:w-auto px-5 py-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-300 font-bold text-xs border border-emerald-300 dark:border-emerald-700 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full sm:w-auto px-5 py-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <Shield className="w-4 h-4 text-emerald-600" />
                     <span>Citizen / Victim Portal</span>
@@ -342,17 +325,10 @@ export default function App() {
                   onViewOnMap={handleViewOnMap}
                   onViewDossier={handleViewDossier}
                   onRegeneratePrediction={handleRegeneratePrediction}
-                  onNavigateToSih={() => setActiveTab('sih')}
                   onCaseUpdated={async (updated) => {
                     await loadData();
                     showToast(`Case ${updated.complaintId} updated & synchronized across MHA platform`);
                   }}
-                />
-              )}
-
-              {activeTab === 'sih' && (
-                <SihPredictiveDashboard
-                  onDispatchAlert={handleDispatchAlert}
                 />
               )}
 
@@ -390,10 +366,10 @@ export default function App() {
       </main>
 
       {/* Official Government Footer */}
-      <footer className="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-4 px-4 text-center text-xs text-slate-500 dark:text-slate-400">
+      <footer className="mt-auto border-t border-slate-200/90 bg-white/90 backdrop-blur-md py-4 px-4 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-slate-700 dark:text-slate-300">
+            <span className="font-semibold text-slate-700">
               {portalMode === 'victim'
                 ? 'National Cybercrime Reporting Portal (NCRP)'
                 : 'Ministry of Home Affairs (MHA)'}

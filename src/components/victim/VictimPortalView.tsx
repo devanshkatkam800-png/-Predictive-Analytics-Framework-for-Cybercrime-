@@ -155,17 +155,17 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
     <div className="space-y-6">
       {/* Citizen Sub-Navbar & Tab Strip */}
       {currentVictim ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-3 shadow-xs">
+        <div className="glass-card rounded-2xl p-3 sm:p-4 shadow-md shadow-slate-200/40 border border-slate-200/80">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             {/* Citizen Identifier Pill */}
             <div className="flex items-center gap-2.5 px-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold">
+              <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#1e3a8a] flex items-center justify-center font-bold shadow-xs">
                 <User className="w-4 h-4" />
               </div>
               <div>
-                <div className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
                   <span>{currentVictim.name}</span>
-                  <span className="font-mono text-[10px] text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-200 dark:border-emerald-800 font-semibold">
+                  <span className="font-mono text-[10px] text-[#1e3a8a] bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200 font-semibold">
                     {currentVictim.victimId}
                   </span>
                 </div>
@@ -176,13 +176,13 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
             </div>
 
             {/* Sub-Navigation Buttons */}
-            <div className="flex items-center gap-1 overflow-x-auto text-xs font-semibold py-1">
+            <div className="flex items-center gap-1.5 overflow-x-auto text-xs font-semibold py-1">
               <button
                 onClick={() => setSubTab('dashboard')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
                   subTab === 'dashboard'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-sm shadow-blue-900/20'
+                    : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
                 <BarChart3 className="w-3.5 h-3.5" />
@@ -191,10 +191,10 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
 
               <button
                 onClick={() => setSubTab('tracker')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
                   subTab === 'tracker'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-sm shadow-blue-900/20'
+                    : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
                 <Compass className="w-3.5 h-3.5" />
@@ -203,22 +203,22 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
 
               <button
                 onClick={() => setSubTab('new-complaint')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer font-bold ${
                   subTab === 'new-complaint'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-sm shadow-blue-900/20'
+                    : 'text-[#1e3a8a] bg-blue-50/70 hover:bg-blue-100/70 border border-blue-200/60'
                 }`}
               >
-                <FilePlus className="w-3.5 h-3.5" />
+                <FilePlus className="w-3.5 h-3.5 text-[#2563eb]" />
                 <span>Report Fraud</span>
               </button>
 
               <button
                 onClick={() => setSubTab('evidence')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
                   subTab === 'evidence'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-sm shadow-blue-900/20'
+                    : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
                 <FolderArchive className="w-3.5 h-3.5" />
@@ -227,10 +227,10 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
 
               <button
                 onClick={() => setSubTab('recovery')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
                   subTab === 'recovery'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-sm shadow-blue-900/20'
+                    : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
                 <TrendingUp className="w-3.5 h-3.5" />
@@ -239,10 +239,10 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
 
               <button
                 onClick={() => setSubTab('notifications')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all whitespace-nowrap relative cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all whitespace-nowrap relative cursor-pointer ${
                   subTab === 'notifications'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-sm shadow-blue-900/20'
+                    : 'text-slate-600 hover:bg-slate-100'
                 }`}
               >
                 <Bell className="w-3.5 h-3.5" />
@@ -256,20 +256,20 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
 
               <button
                 onClick={() => setSubTab('ai-assistant')}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all whitespace-nowrap cursor-pointer ${
                   subTab === 'ai-assistant'
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xs'
-                    : 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/50'
+                    ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-sm shadow-blue-900/20'
+                    : 'text-blue-700 hover:bg-blue-50'
                 }`}
               >
-                <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+                <Sparkles className="w-3.5 h-3.5 text-blue-500" />
                 <span>AI Cyber Advisor</span>
               </button>
 
               {/* Citizen Sign Out */}
               <button
                 onClick={handleLogout}
-                className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors ml-1 cursor-pointer"
+                className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors ml-1 cursor-pointer"
                 title="Citizen Sign Out"
               >
                 <LogOut className="w-4 h-4" />
@@ -283,50 +283,50 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
       {!currentVictim ? (
         /* Unauthenticated Citizen Portal Hero / Landing */
         <div className="max-w-3xl mx-auto my-8 space-y-6">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 sm:p-10 shadow-xl text-center relative overflow-hidden">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-700 text-white mb-4 shadow-lg shadow-emerald-700/25">
+          <div className="glass-card border border-slate-200/80 rounded-3xl p-8 sm:p-10 shadow-xl shadow-slate-200/50 text-center relative overflow-hidden bg-white/90">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#1e3a8a] to-[#2563eb] text-white mb-4 shadow-lg shadow-blue-900/25">
               <Shield className="w-8 h-8 text-white" />
             </div>
 
-            <div className="text-[11px] font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400 mb-1">
+            <div className="text-[11px] font-bold uppercase tracking-widest text-[#1e3a8a] mb-1">
               GOVERNMENT OF INDIA &bull; NATIONAL CYBERCRIME REPORTING PORTAL
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               Citizen Cyber Fraud Redressal & Recovery Portal
             </h1>
 
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 max-w-xl mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-xl mx-auto leading-relaxed">
               Official portal for victims of cyber financial fraud, UPI scams, fake loan apps, and identity theft. Log your incident to immediately trigger the 1930 automated inter-bank freeze and track fund restitution in real time.
             </p>
 
             <div className="my-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
-                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/80 text-xs space-y-1">
+                <div className="font-bold text-slate-900 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#10b981]" />
                   <span>Immediate Bank Freeze</span>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 text-[11px]">
+                <p className="text-slate-500 text-[11px]">
                   Direct API broadcast to victim and beneficiary banks to halt withdrawals.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
-                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-blue-500" />
-                  <span>7-Stage Case Tracking</span>
+              <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/80 text-xs space-y-1">
+                <div className="font-bold text-slate-900 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#2563eb]" />
+                  <span>6-Stage Case Tracking</span>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 text-[11px]">
+                <p className="text-slate-500 text-[11px]">
                   End-to-end transparency from complaint verification to court restitution.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-1">
-                <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-purple-500" />
+              <div className="p-4 rounded-xl bg-slate-50/80 border border-slate-200/80 text-xs space-y-1">
+                <div className="font-bold text-slate-900 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#1e3a8a]" />
                   <span>Gemini AI Cyber Advisor</span>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 text-[11px]">
+                <p className="text-slate-500 text-[11px]">
                   24x7 automated legal and banking guidance for cybercrime victims.
                 </p>
               </div>
@@ -336,7 +336,7 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
               <button
                 type="button"
                 onClick={() => setAuthModalOpen(true)}
-                className="w-full sm:w-auto px-7 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-emerald-700/20 cursor-pointer"
+                className="w-full sm:w-auto px-7 py-3 rounded-xl bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] hover:from-blue-900 hover:to-blue-700 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-900/25 cursor-pointer"
               >
                 <span>Citizen Sign In / Register</span>
                 <ArrowRight className="w-4 h-4" />
@@ -345,7 +345,7 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
               <button
                 type="button"
                 onClick={onSwitchToOfficerPortal}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                className="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-300 text-slate-700 font-bold text-xs hover:bg-slate-100 transition-colors cursor-pointer"
               >
                 Switch to Officer Intelligence Portal
               </button>
@@ -439,6 +439,7 @@ export const VictimPortalView: React.FC<VictimPortalViewProps> = ({
               complaints={complaints}
               selectedComplaintId={selectedComplaintId}
               onSelectComplaint={(id) => setSelectedComplaintId(id)}
+              onFileNewComplaint={() => setSubTab('new-complaint')}
             />
           )}
         </div>

@@ -173,22 +173,22 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
   return (
     <div className="max-w-4xl mx-auto">
       {/* Title Card */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs mb-6">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 uppercase tracking-wider">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 uppercase tracking-wider">
                 MHA CYBERCRIME INTAKE
               </span>
               <span className="text-xs text-slate-400">&bull;</span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
+              <span className="text-xs text-slate-500">
                 Automatic Geospatial Predictive Engine Active
               </span>
             </div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
               Register Cybercrime Complaint
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-xs text-slate-500 mt-1">
               Submitting this official record will immediately execute the predictive analytics framework to forecast likely cash withdrawal zones in advance.
             </p>
           </div>
@@ -199,21 +199,21 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
             <button
               type="button"
               onClick={() => handlePreFillScenario('upi_mumbai')}
-              className="px-2 py-1 rounded text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors"
+              className="px-2 py-1 rounded text-[11px] font-semibold bg-slate-100 hover:bg-blue-50 text-slate-700 border border-slate-200 transition-colors"
             >
               Mumbai UPI
             </button>
             <button
               type="button"
               onClick={() => handlePreFillScenario('digital_arrest')}
-              className="px-2 py-1 rounded text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors"
+              className="px-2 py-1 rounded text-[11px] font-semibold bg-slate-100 hover:bg-blue-50 text-slate-700 border border-slate-200 transition-colors"
             >
               Digital Arrest
             </button>
             <button
               type="button"
               onClick={() => handlePreFillScenario('mewat_sim')}
-              className="px-2 py-1 rounded text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-950/60 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors"
+              className="px-2 py-1 rounded text-[11px] font-semibold bg-slate-100 hover:bg-blue-50 text-slate-700 border border-slate-200 transition-colors"
             >
               Mewat ATM
             </button>
@@ -221,7 +221,7 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
         </div>
 
         {error && (
-          <div className="mt-4 p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2">
+          <div className="mt-4 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -231,15 +231,15 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
       {/* Main Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Section 1: Complaint & Financial Loss Data */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 mb-4 flex items-center gap-2">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-blue-700 mb-4 flex items-center gap-2">
             <Hash className="w-4 h-4" />
             <span>1. Complaint & Modus Operandi Details</span>
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Complaint ID <span className="text-rose-500">*</span>
               </label>
               <input
@@ -247,18 +247,18 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
                 required
                 value={complaintId}
                 onChange={(e) => setComplaintId(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:outline-none focus:border-blue-600"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Fraud Type <span className="text-rose-500">*</span>
               </label>
               <select
                 value={fraudType}
                 onChange={(e) => setFraudType(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600"
               >
                 {FRAUD_TYPES.map((ft) => (
                   <option key={ft} value={ft}>
@@ -269,7 +269,7 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Amount Lost (₹ INR) <span className="text-rose-500">*</span>
               </label>
               <input
@@ -279,12 +279,12 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
                 value={amountLost}
                 onChange={(e) => setAmountLost(e.target.value)}
                 placeholder="e.g. 185000"
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white font-bold focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 font-bold focus:outline-none focus:border-blue-600"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Victim City <span className="text-rose-500">*</span>
               </label>
               <input
@@ -293,18 +293,18 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
                 value={victimCity}
                 onChange={(e) => setVictimCity(e.target.value)}
                 placeholder="e.g. Mumbai"
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Victim State <span className="text-rose-500">*</span>
               </label>
               <select
                 value={victimState}
                 onChange={(e) => setVictimState(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600"
               >
                 {INDIAN_STATES.map((st) => (
                   <option key={st} value={st}>
@@ -315,13 +315,13 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Triage Priority Level
               </label>
               <select
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as any)}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600"
               >
                 <option value="Critical">Critical (Immediate Intercept)</option>
                 <option value="High">High Priority</option>
@@ -333,21 +333,21 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
         </div>
 
         {/* Section 2: Banking & Transaction Identifiers */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 mb-4 flex items-center gap-2">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-blue-700 mb-4 flex items-center gap-2">
             <CreditCard className="w-4 h-4" />
             <span>2. Banking & Transaction Trail</span>
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Victim Bank Name <span className="text-rose-500">*</span>
               </label>
               <select
                 value={bankName}
                 onChange={(e) => setBankName(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600"
               >
                 {MAJOR_BANKS.map((b) => (
                   <option key={b} value={b}>
@@ -358,7 +358,7 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Victim Account Number
               </label>
               <input
@@ -366,12 +366,12 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
                 value={accountNumber}
                 onChange={(e) => setAccountNumber(e.target.value)}
                 placeholder="XXXX-XXXX-4819"
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:outline-none focus:border-blue-600"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Suspect / Mule UPI ID
               </label>
               <input
@@ -379,36 +379,36 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
                 value={upiId}
                 onChange={(e) => setUpiId(e.target.value)}
                 placeholder="mule.pay@oksbi"
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:outline-none focus:border-blue-600"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Transaction Date
               </label>
               <input
                 type="date"
                 value={transactionDate}
                 onChange={(e) => setTransactionDate(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Transaction Time (24h)
               </label>
               <input
                 type="time"
                 value={transactionTime}
                 onChange={(e) => setTransactionTime(e.target.value)}
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:border-blue-600"
               />
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block font-semibold text-slate-700 mb-1">
                 Transaction Ref / UTR
               </label>
               <input
@@ -416,21 +416,21 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
                 value={transactionId}
                 onChange={(e) => setTransactionId(e.target.value)}
                 placeholder="e.g. TXN-50192841"
-                className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white font-mono focus:outline-none focus:border-blue-600"
+                className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:outline-none focus:border-blue-600"
               />
             </div>
           </div>
         </div>
 
         {/* Section 3: Modus Operandi & Complaint Description */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 mb-4 flex items-center gap-2">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-blue-700 mb-4 flex items-center gap-2">
             <FileText className="w-4 h-4" />
             <span>3. Incident Narrative & Modus Operandi Description</span>
           </h2>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
               Detailed Description <span className="text-rose-500">*</span>
             </label>
             <textarea
@@ -439,11 +439,11 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
               value={complaintDescription}
               onChange={(e) => setComplaintDescription(e.target.value)}
               placeholder="Provide complete details: How did contact initiate? What links, apps, or VPAs were involved? How were funds layered?"
-              className="w-full p-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-xs text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600"
+              className="w-full p-3 bg-white border border-slate-300 rounded-lg text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600"
             />
           </div>
 
-          <div className="mt-4 p-3 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-xs text-blue-900 dark:text-blue-200 flex items-start gap-2">
+          <div className="mt-4 p-3 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-900 flex items-start gap-2">
             <Sparkles className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
             <div>
               <span className="font-bold">Automated Intelligence Trigger:</span> Upon clicking submission below, the system will match this complaint with historical withdrawal cases, bank clearing timelines, and corridor clustering to predict high-risk cash withdrawal zones (e.g. Andheri East, Kurla, Thane) and calculate confidence scores.
@@ -457,7 +457,7 @@ export const ComplaintForm: React.FC<ComplaintFormProps> = ({ onSubmitSuccess, o
             <button
               type="button"
               onClick={onCancel}
-              className="px-5 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="px-5 py-2.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
             >
               Cancel
             </button>

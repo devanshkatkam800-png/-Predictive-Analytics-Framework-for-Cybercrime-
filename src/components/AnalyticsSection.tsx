@@ -36,33 +36,33 @@ export const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({ stats }) => 
   return (
     <div className="space-y-6">
       {/* Title Header */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
         <div className="flex items-center gap-2 mb-1">
-          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 uppercase tracking-wider">
+          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 uppercase tracking-wider">
             MHA CYBER THREAT ANALYTICS
           </span>
           <span className="text-xs text-slate-400">&bull;</span>
-          <span className="text-xs text-slate-500 dark:text-slate-400">
+          <span className="text-xs text-slate-500">
             Official Strategic Indicators
           </span>
         </div>
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
           Cybercrime Intelligence Analytics
         </h1>
-        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
+        <p className="text-xs text-slate-500 mt-1 max-w-2xl">
           Empirical breakdown of scam typologies, geographic cash withdrawal hotspots, and historical complaint trends informing predictive model priors.
         </p>
       </div>
 
       {/* Section 1: Fraud Type Distribution */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs">
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
           <div>
-            <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
               <PieIcon className="w-4 h-4 text-blue-600" />
               <span>1. Fraud Type Distribution</span>
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5">
               Breakdown of registered cybercrime incidents across fraud categories
             </p>
           </div>
@@ -108,19 +108,19 @@ export const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({ stats }) => 
               return (
                 <div
                   key={item.name}
-                  className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs"
+                  className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between text-xs"
                 >
                   <div className="flex items-center gap-2">
                     <span
                       className="w-3 h-3 rounded-full shrink-0"
                       style={{ backgroundColor: COLORS[idx % COLORS.length] }}
                     />
-                    <span className="font-semibold text-slate-800 dark:text-slate-200">
+                    <span className="font-semibold text-slate-800">
                       {item.name}
                     </span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-slate-900 dark:text-white">
+                    <span className="font-bold text-slate-900">
                       {item.count} cases
                     </span>
                     <span className="text-slate-400 font-mono text-[11px] w-10 text-right">
@@ -135,18 +135,18 @@ export const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({ stats }) => 
       </div>
 
       {/* Section 2: Withdrawal Hotspots */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs">
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
           <div>
-            <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
               <MapPin className="w-4 h-4 text-rose-600" />
               <span>2. High-Risk Withdrawal Hotspots & ATM Corridors</span>
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5">
               Ranked geographic clusters by cash withdrawal volume and incident density
             </p>
           </div>
-          <span className="text-xs text-rose-600 dark:text-rose-400 font-semibold">
+          <span className="text-xs text-rose-600 font-semibold">
             {stats.withdrawalHotspots.length} Identified Hotspots
           </span>
         </div>
@@ -183,23 +183,23 @@ export const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({ stats }) => 
             {stats.withdrawalHotspots.map((spot, idx) => (
               <div
                 key={spot.clusterName}
-                className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs"
+                className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs"
               >
                 <div className="flex items-center justify-between gap-1 mb-1">
-                  <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
-                    <span className="w-4 h-4 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300 text-[10px] flex items-center justify-center font-bold">
+                  <div className="flex items-center gap-1.5 font-bold text-slate-900">
+                    <span className="w-4 h-4 rounded-full bg-rose-100 text-rose-700 text-[10px] flex items-center justify-center font-bold">
                       {idx + 1}
                     </span>
                     <span>{spot.clusterName}</span>
                   </div>
-                  <span className="font-extrabold text-rose-600 dark:text-rose-400">
+                  <span className="font-extrabold text-rose-600">
                     ₹{(spot.totalAmountWithdrawn / 100000).toFixed(1)}L
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
+                <div className="flex items-center justify-between text-[11px] text-slate-500">
                   <span>{spot.city}</span>
-                  <span className="font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-slate-700">
                     {spot.incidentCount} Recorded Cash-Outs
                   </span>
                 </div>
@@ -210,14 +210,14 @@ export const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({ stats }) => 
       </div>
 
       {/* Section 3: Historical Fraud Trends */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs">
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
+        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
           <div>
-            <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-emerald-600" />
               <span>3. Historical Fraud Trends (Month-over-Month)</span>
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5">
               Trajectory of incident volumes and cumulative financial loss
             </p>
           </div>

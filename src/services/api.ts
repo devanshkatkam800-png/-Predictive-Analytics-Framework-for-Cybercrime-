@@ -8,12 +8,7 @@ import {
   DashboardStats,
   User,
   VictimEvidence,
-  RecoveryStatus,
-  SihAtmLocation,
-  SihMuleTransaction,
-  SihPredictionRequest,
-  SihPredictionResult,
-  SihModelMetrics
+  RecoveryStatus
 } from '../types';
 
 const API_BASE = '/api';
@@ -324,46 +319,6 @@ export const api = {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Failed to fetch logs');
     return Array.isArray(data) ? data : [];
-  },
-
-  // SIH Cybercrime Predictive Intelligence APIs (from manalgharat61/sih-cybercrime-intelligence)
-  async sihPredict(req: SihPredictionRequest): Promise<SihPredictionResult> {
-    const res = await fetch(`${API_BASE}/sih/predict`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(req)
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'SIH Prediction failed');
-    return data;
-  },
-
-  async getSihAtms(params?: { zone?: string; bank?: string; highRisk?: boolean }): Promise<SihAtmLocation[]> {
-    const query = new URLSearchParams();
-    if (params?.zone) query.append('zone', params.zone);
-    if (params?.bank) query.append('bank', params.bank);
-    if (params?.highRisk) query.append('highRisk', 'true');
-    const res = await fetch(`${API_BASE}/sih/atms?${query.toString()}`);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Failed to fetch ATMs');
-    return Array.isArray(data) ? data : [];
-  },
-
-  async getSihMuleTransactions(params?: { limit?: number; search?: string }): Promise<SihMuleTransaction[]> {
-    const query = new URLSearchParams();
-    if (params?.limit) query.append('limit', String(params.limit));
-    if (params?.search) query.append('search', params.search);
-    const res = await fetch(`${API_BASE}/sih/mule-transactions?${query.toString()}`);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Failed to fetch mule transactions');
-    return Array.isArray(data) ? data : [];
-  },
-
-  async getSihModelMetrics(): Promise<SihModelMetrics> {
-    const res = await fetch(`${API_BASE}/sih/model-metrics`);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Failed to fetch model metrics');
-    return data;
   }
 };
 
@@ -615,6 +570,77 @@ export const victimApi = {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Failed to get AI advisor response');
     return data;
+  },
+
+  async askAiAssistantStream(
+    question: string,
+    complaintId: string | undefined,
+    onChunk: (chunk: string) => void,
+    onComplete: (data: { advice: string; keySteps: string[]; emergencyHelpline: string }) => void,
+    onError: (err: Error) => void
+  ): Promise<void> {
+    try {
+      const res = await fetch(`${API_BASE}/victim/ai-assistant/stream`, {
+        method: 'POST',
+        headers: getVictimAuthHeaders(),
+        body: JSON.stringify({ question, complaintId })
+      });
+
+      if (!res.ok || !res.body) {
+        // Fallback to standard non-streaming endpoint
+        const fallback = await victimApi.askAiAssistant(question, complaintId);
+        onChunk(fallback.advice);
+        onComplete(fallback);
+        return;
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let buffer = '';
+      let fullText = '';
+      let completedSteps: string[] = [];
+      let completedHelpline = 'National Cyber Crime Helpline: 1930 (Toll-Free 24x7) | cybercrime.gov.in';
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed.startsWith('data: ')) continue;
+          try {
+            const data = JSON.parse(trimmed.slice(6));
+            if (data.chunk) {
+              fullText += data.chunk;
+              onChunk(data.chunk);
+            }
+            if (data.done) {
+              if (data.fullText && !fullText) fullText = data.fullText;
+              if (data.keySteps) completedSteps = data.keySteps;
+              if (data.emergencyHelpline) completedHelpline = data.emergencyHelpline;
+            }
+          } catch {
+            // Ignore parse errors on partial chunks
+          }
+        }
+      }
+
+      onComplete({
+        advice: fullText,
+        keySteps: completedSteps.length > 0 ? completedSteps : [
+          'Call 1930 immediately to report the transaction with the National Cyber Crime portal.',
+          'Notify your bank nodal officer to place a freeze on beneficiary accounts.',
+          'File an official acknowledgment docket on cybercrime.gov.in.'
+        ],
+        emergencyHelpline: completedHelpline
+      });
+    } catch (err: any) {
+      onError(err instanceof Error ? err : new Error(String(err)));
+    }
   }
 };
 

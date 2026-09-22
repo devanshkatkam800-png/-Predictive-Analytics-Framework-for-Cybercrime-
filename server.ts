@@ -3,8 +3,7 @@ import path from 'path';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { db, UserEntity, ComplaintEntity, HistoricalCaseEntity, ReportEntity, VictimEntity, VictimComplaintEntity, ComplaintTimelineStage } from './server/db';
-import { analyzeAndPredictCybercrime, generateVictimAiAdvice } from './server/ai';
-import { sihEngine } from './server/sih_engine';
+import { analyzeAndPredictCybercrime, generateVictimAiAdvice, generateVictimAiAdviceStream } from './server/ai';
 import { createServer as createViteServer } from 'vite';
 
 const app = express();
@@ -82,6 +81,23 @@ function authenticateVictimToken(req: AuthenticatedVictimRequest, res: Response,
   } catch (err) {
     return res.status(403).json({ error: 'Invalid or expired session. Please log in again.' });
   }
+}
+
+function optionalVictimToken(req: AuthenticatedVictimRequest, res: Response, next: NextFunction) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      if (decoded.role === 'victim') {
+        req.victim = decoded;
+      }
+    } catch {
+      // ignore invalid token for optional authorization
+    }
+  }
+  next();
 }
 
 function requireRole(allowedRoles: Array<'officer' | 'admin'>) {
@@ -1607,8 +1623,8 @@ app.post('/api/victim/notifications/read-all', authenticateVictimToken, (req: Au
   res.json({ success: true });
 });
 
-// V16. Victim AI Cyber Advisor (Gemini)
-app.post('/api/victim/ai-assistant', authenticateVictimToken, async (req: AuthenticatedVictimRequest, res: Response) => {
+// V16. Victim AI Cyber Advisor (Gemini) - Standard REST endpoint (cached <1s, Gemini <3s)
+app.post('/api/victim/ai-assistant', optionalVictimToken, async (req: AuthenticatedVictimRequest, res: Response) => {
   try {
     const { question, complaintId } = req.body;
 
@@ -1619,7 +1635,7 @@ app.post('/api/victim/ai-assistant', authenticateVictimToken, async (req: Authen
     let complaintContext: any = undefined;
     if (complaintId) {
       const c = db.getVictimComplaintById(complaintId);
-      if (c && c.victimId === req.victim!.victimId) {
+      if (c && (!req.victim || c.victimId === req.victim.victimId)) {
         complaintContext = {
           complaintId: c.complaintId,
           fraudType: c.fraudType,
@@ -1638,61 +1654,48 @@ app.post('/api/victim/ai-assistant', authenticateVictimToken, async (req: Authen
   }
 });
 
-// ----------------------------------------------------
-// SIH CYBERCRIME PREDICTIVE INTELLIGENCE (manalgharat61/sih-cybercrime-intelligence)
-// ----------------------------------------------------
-
-// SIH 1. Predict High-Risk Cashout Zone & Hotspot ATMs
-app.post('/api/sih/predict', (req: Request, res: Response) => {
+// V17. Victim AI Cyber Advisor - Streaming SSE endpoint for real-time token rendering
+app.post('/api/victim/ai-assistant/stream', optionalVictimToken, async (req: AuthenticatedVictimRequest, res: Response) => {
   try {
-    const { amount_lost, fraud_type, hour_of_day, day_of_week, is_weekend, victim_district, payment_channel } = req.body;
-    const result = sihEngine.predictHotspot({
-      amount_lost: Number(amount_lost) || 25000,
-      fraud_type: fraud_type || 'UPI Phishing',
-      hour_of_day: Number(hour_of_day) ?? 14,
-      day_of_week: Number(day_of_week) ?? 0,
-      is_weekend: Number(is_weekend) ?? 0,
-      victim_district: victim_district || 'Zone_Central',
-      payment_channel: payment_channel || 'UPI'
-    });
-    res.json(result);
-  } catch (err: any) {
-    res.status(500).json({ error: 'SIH Prediction failed: ' + err.message });
-  }
-});
+    const { question, complaintId } = req.body;
 
-// SIH 2. ATM Locations Network (150 ATMs from dataset.py)
-app.get('/api/sih/atms', (req: Request, res: Response) => {
-  try {
-    const zone = req.query.zone as string | undefined;
-    const bank = req.query.bank as string | undefined;
-    const highRiskOnly = req.query.highRisk === 'true';
-    const atms = sihEngine.getAtms(zone, bank, highRiskOnly);
-    res.json(atms);
-  } catch (err: any) {
-    res.status(500).json({ error: 'Failed to fetch ATMs: ' + err.message });
-  }
-});
+    if (!question || typeof question !== 'string') {
+      return res.status(400).json({ error: 'A question string is required.' });
+    }
 
-// SIH 3. Mule Transactions Siphoning Ledger (from mule_transactions.csv)
-app.get('/api/sih/mule-transactions', (req: Request, res: Response) => {
-  try {
-    const limit = Number(req.query.limit) || 100;
-    const search = (req.query.search as string) || '';
-    const txs = sihEngine.getMuleTransactions(limit, search);
-    res.json(txs);
-  } catch (err: any) {
-    res.status(500).json({ error: 'Failed to fetch mule transactions: ' + err.message });
-  }
-});
+    let complaintContext: any = undefined;
+    if (complaintId) {
+      const c = db.getVictimComplaintById(complaintId);
+      if (c && (!req.victim || c.victimId === req.victim.victimId)) {
+        complaintContext = {
+          complaintId: c.complaintId,
+          fraudType: c.fraudType,
+          amountLost: c.amountLost,
+          bankName: c.bankName,
+          status: c.status
+        };
+      }
+    }
 
-// SIH 4. Random Forest Model Evaluation Metrics
-app.get('/api/sih/model-metrics', (req: Request, res: Response) => {
-  try {
-    const metrics = sihEngine.getModelMetrics();
-    res.json(metrics);
+    // Set Server-Sent Events headers
+    res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache, no-transform');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders?.();
+
+    for await (const event of generateVictimAiAdviceStream(question, complaintContext)) {
+      res.write(`data: ${JSON.stringify(event)}\n\n`);
+    }
+
+    res.end();
   } catch (err: any) {
-    res.status(500).json({ error: 'Failed to fetch model metrics: ' + err.message });
+    console.error('Error in streaming AI advisor:', err);
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Streaming AI advisor service error: ' + err.message });
+    } else {
+      res.write(`data: ${JSON.stringify({ error: 'Streaming interrupted', done: true })}\n\n`);
+      res.end();
+    }
   }
 });
 

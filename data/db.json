@@ -26,7 +26,7 @@
       "userId": "usr-officer-wjde9",
       "name": "Devansh",
       "email": "devanshkatkam800@gmail.com",
-      "passwordHash": "$2b$10$JYOybTUhfyxHRrJoB3esD.nclPs5P7eeBeFJAbIQxGeh1j30wnBki",
+      "passwordHash": "$2b$10$ZqNwyC2Y5LXqXOa9dYD3QOiSPSKcRCWgAD3nk051qA3B4dqHzb0WS",
       "role": "officer",
       "organization": "Ministry of Home Affairs - I4C",
       "badgeNumber": "MHA-CYB-7666",
@@ -34,6 +34,36 @@
     }
   ],
   "complaints": [
+    {
+      "complaintId": "CC-2026-7783",
+      "fraudType": "UPI Phishing",
+      "amountLost": 45000,
+      "victimCity": "Mumbai",
+      "victimState": "Maharashtra",
+      "transactionDate": "2026-09-06",
+      "transactionTime": "14:30",
+      "bankName": "State Bank of India",
+      "accountNumber": "NOT_SPECIFIED",
+      "upiId": "",
+      "transactionId": "TXN9988776655",
+      "complaintDescription": "Unauthorized UPI debit alert received without sharing OTP.",
+      "status": "Analyzed",
+      "priority": "High",
+      "officerId": "usr-off-001",
+      "officerName": "Insp. Vikram Rathore",
+      "createdAt": "2026-09-06T09:03:03.759Z",
+      "notes": [
+        {
+          "id": "note-init",
+          "author": "Insp. Vikram Rathore",
+          "role": "officer",
+          "text": "Complaint entered and predictive analytics pipeline executed.",
+          "timestamp": "2026-09-06T09:03:03.759Z"
+        }
+      ],
+      "predictionId": "pred-1788685387515-3zrw",
+      "updatedAt": "2026-09-06T09:03:07.515Z"
+    },
     {
       "complaintId": "NCRP-2025-9685",
       "victimId": "VIC-2025-1132",
@@ -52,7 +82,7 @@
       "transactionDate": "2026-09-06",
       "transactionTime": "13:04",
       "complaintDescription": "Received an urgent call claiming to be from customer support asking to verify electricity bill refund. Clicked an SMS link that triggered an unauthorized UPI debit.",
-      "status": "Prediction Generated",
+      "status": "Patrol Dispatched",
       "priority": "High",
       "officerId": "usr-off-001",
       "officerName": "Insp. Vikram Rathore",
@@ -138,7 +168,7 @@
         }
       ],
       "createdAt": "2026-09-06T07:35:07.452Z",
-      "updatedAt": "2026-09-06T07:43:59.729Z",
+      "updatedAt": "2026-09-06T08:17:30.316Z",
       "notes": [],
       "predictionId": "pred-1788680639729-vykn"
     },
@@ -455,6 +485,149 @@
     }
   ],
   "predictions": [
+    {
+      "predictionId": "pred-1788685387515-3zrw",
+      "complaintId": "CC-2026-7783",
+      "riskScore": 80,
+      "confidenceScore": 87,
+      "riskLevel": "High",
+      "priorityLevel": "High",
+      "topPredictedZones": [
+        {
+          "zoneId": "zone-1-kurla-cluster",
+          "zoneName": "Kurla Cluster",
+          "city": "Mumbai",
+          "state": "Maharashtra",
+          "probability": 88,
+          "riskLevel": "High",
+          "lat": 19.0657,
+          "lng": 72.8793,
+          "clusterRadiusMeters": 1500,
+          "linkedHistoricalCasesCount": 4,
+          "linkedHistoricalCases": [
+            {
+              "caseId": "HIST-2024-002",
+              "fraudType": "UPI Fraud",
+              "amount": 240000,
+              "bank": "HDFC Bank",
+              "withdrawalLocation": "HDFC Bank 24x7 ATM, Kurla West Station Plaza",
+              "date": "2024-11-20"
+            },
+            {
+              "caseId": "HIST-2024-005",
+              "fraudType": "UPI Fraud",
+              "amount": 310000,
+              "bank": "Punjab National Bank",
+              "withdrawalLocation": "Punjab National Bank ATM, Kurla East Nehru Nagar",
+              "date": "2024-12-28"
+            }
+          ],
+          "atmCount": 10,
+          "representativeAtm": "HDFC Bank 24x7 ATM, Kurla West Station Plaza",
+          "estimatedTimeframe": "Within 30 - 45 mins",
+          "aiExplanation": "Historical pattern analysis correlates this zone with 2 documented cases for UPI Phishing."
+        },
+        {
+          "zoneId": "zone-2-andheri-east-cluster",
+          "zoneName": "Andheri East Cluster",
+          "city": "Mumbai",
+          "state": "Maharashtra",
+          "probability": 77,
+          "riskLevel": "High",
+          "lat": 19.1197,
+          "lng": 72.8464,
+          "clusterRadiusMeters": 1500,
+          "linkedHistoricalCasesCount": 3,
+          "linkedHistoricalCases": [
+            {
+              "caseId": "HIST-2024-001",
+              "fraudType": "UPI Fraud",
+              "amount": 185000,
+              "bank": "State Bank of India",
+              "withdrawalLocation": "SBI E-Corner & ATM, Andheri East Station Road",
+              "date": "2024-11-14"
+            },
+            {
+              "caseId": "HIST-2024-004",
+              "fraudType": "ATM Cloning",
+              "amount": 95000,
+              "bank": "Axis Bank",
+              "withdrawalLocation": "Axis Bank ATM, Chakala Metro Station",
+              "date": "2024-12-15"
+            }
+          ],
+          "atmCount": 10,
+          "representativeAtm": "SBI E-Corner & ATM, Andheri East Station Road",
+          "estimatedTimeframe": "Within 45 - 60 mins",
+          "aiExplanation": "Historical pattern analysis correlates this zone with 2 documented cases for UPI Phishing."
+        },
+        {
+          "zoneId": "zone-3-andheri-east",
+          "zoneName": "Andheri East",
+          "city": "Mumbai",
+          "state": "Maharashtra",
+          "probability": 58,
+          "riskLevel": "Low",
+          "lat": 19.1197,
+          "lng": 72.8464,
+          "clusterRadiusMeters": 1200,
+          "linkedHistoricalCasesCount": 2,
+          "linkedHistoricalCases": [],
+          "atmCount": 18,
+          "representativeAtm": "SBI E-Corner & ATM, Andheri East Station Road",
+          "estimatedTimeframe": "Within 60 - 90 mins",
+          "aiExplanation": "Historical pattern analysis correlates this zone with high-frequency cash-out routes for UPI Phishing."
+        }
+      ],
+      "scamClassification": "UPI Phishing Syndicate Modus Operandi",
+      "patternAnalysis": "Fraud funds siphoned from State Bank of India (₹45,000) routed across transit-linked cash withdrawal corridors.",
+      "riskExplanation": "This complaint closely matches previous UPI Phishing cases. Historical withdrawal activity was concentrated in Kurla Cluster (88%) and Andheri East Cluster (77%) and Andheri East (58%).",
+      "investigationRecommendations": [
+        "Issue immediate Section 91 CrPC alert to State Bank of India and beneficiary banks for account freeze.",
+        "Dispatch local cyber beat patrols to high-risk ATM clusters in Kurla Cluster.",
+        "Preserve CCTV footage at high-probability ATMs within the designated Within 30 - 45 mins cash-out window.",
+        "Upload suspect transaction reference TXN9988776655 to I4C / CFCFRMS portal for coordinated national interdiction."
+      ],
+      "aiAnalysisText": "Automated predictive assessment for complaint CC-2026-7783. Model indicates High risk of immediate cash exit.",
+      "explainableFactors": [
+        {
+          "title": "Same fraud type found in 12 historical cases",
+          "count": 12,
+          "matchType": "fraud_type",
+          "description": "Syndicate profile matches 12 documented cases of UPI Phishing utilizing identical phishing and social-engineering bait.",
+          "verified": true
+        },
+        {
+          "title": "Same bank used in 8 historical cases",
+          "count": 8,
+          "matchType": "bank",
+          "description": "Targeting State Bank of India accounts due to rapid settlement windows and specific ATM cash dispenser configurations.",
+          "verified": true
+        },
+        {
+          "title": "Similar transaction amount (₹34,000 - ₹56,000)",
+          "count": 9,
+          "matchType": "amount",
+          "description": "Withdrawal amounts calibrated right under daily velocity interception triggers in 9 past cases.",
+          "verified": true
+        },
+        {
+          "title": "Similar transaction timing (14:30 (± 2h window))",
+          "count": 7,
+          "matchType": "timing",
+          "description": "Cash exit synchronized during high-traffic banking hours observed in 7 historical mule runs.",
+          "verified": true
+        },
+        {
+          "title": "Similar geographic pattern (Kurla Cluster)",
+          "count": 14,
+          "matchType": "geography",
+          "description": "Correlated with 14 historical withdrawals concentrated along the Kurla Cluster transit axis.",
+          "verified": true
+        }
+      ],
+      "generatedAt": "2026-09-06T09:03:07.515Z"
+    },
     {
       "predictionId": "pred-1788680639729-vykn",
       "complaintId": "NCRP-2025-9685",
@@ -1051,6 +1224,113 @@
   ],
   "reports": [
     {
+      "reportId": "REP-2026-794",
+      "complaintId": "CC-2026-7783",
+      "title": "TACTICAL CASH-OUT WITHDRAWAL INTELLIGENCE: CC-2026-7783",
+      "reportSummary": "Predictive forecast for UPI Phishing complaint of ₹45,000. Highest withdrawal vulnerability identified in Kurla Cluster (88%).",
+      "riskScore": 80,
+      "riskLevel": "High",
+      "confidenceScore": 87,
+      "scamClassification": "UPI Phishing Syndicate Modus Operandi",
+      "patternAnalysis": "Fraud funds siphoned from State Bank of India (₹45,000) routed across transit-linked cash withdrawal corridors.",
+      "topPredictedZones": [
+        {
+          "zoneId": "zone-1-kurla-cluster",
+          "zoneName": "Kurla Cluster",
+          "city": "Mumbai",
+          "state": "Maharashtra",
+          "probability": 88,
+          "riskLevel": "High",
+          "lat": 19.0657,
+          "lng": 72.8793,
+          "clusterRadiusMeters": 1500,
+          "linkedHistoricalCasesCount": 4,
+          "linkedHistoricalCases": [
+            {
+              "caseId": "HIST-2024-002",
+              "fraudType": "UPI Fraud",
+              "amount": 240000,
+              "bank": "HDFC Bank",
+              "withdrawalLocation": "HDFC Bank 24x7 ATM, Kurla West Station Plaza",
+              "date": "2024-11-20"
+            },
+            {
+              "caseId": "HIST-2024-005",
+              "fraudType": "UPI Fraud",
+              "amount": 310000,
+              "bank": "Punjab National Bank",
+              "withdrawalLocation": "Punjab National Bank ATM, Kurla East Nehru Nagar",
+              "date": "2024-12-28"
+            }
+          ],
+          "atmCount": 10,
+          "representativeAtm": "HDFC Bank 24x7 ATM, Kurla West Station Plaza",
+          "estimatedTimeframe": "Within 30 - 45 mins",
+          "aiExplanation": "Historical pattern analysis correlates this zone with 2 documented cases for UPI Phishing."
+        },
+        {
+          "zoneId": "zone-2-andheri-east-cluster",
+          "zoneName": "Andheri East Cluster",
+          "city": "Mumbai",
+          "state": "Maharashtra",
+          "probability": 77,
+          "riskLevel": "High",
+          "lat": 19.1197,
+          "lng": 72.8464,
+          "clusterRadiusMeters": 1500,
+          "linkedHistoricalCasesCount": 3,
+          "linkedHistoricalCases": [
+            {
+              "caseId": "HIST-2024-001",
+              "fraudType": "UPI Fraud",
+              "amount": 185000,
+              "bank": "State Bank of India",
+              "withdrawalLocation": "SBI E-Corner & ATM, Andheri East Station Road",
+              "date": "2024-11-14"
+            },
+            {
+              "caseId": "HIST-2024-004",
+              "fraudType": "ATM Cloning",
+              "amount": 95000,
+              "bank": "Axis Bank",
+              "withdrawalLocation": "Axis Bank ATM, Chakala Metro Station",
+              "date": "2024-12-15"
+            }
+          ],
+          "atmCount": 10,
+          "representativeAtm": "SBI E-Corner & ATM, Andheri East Station Road",
+          "estimatedTimeframe": "Within 45 - 60 mins",
+          "aiExplanation": "Historical pattern analysis correlates this zone with 2 documented cases for UPI Phishing."
+        },
+        {
+          "zoneId": "zone-3-andheri-east",
+          "zoneName": "Andheri East",
+          "city": "Mumbai",
+          "state": "Maharashtra",
+          "probability": 58,
+          "riskLevel": "Low",
+          "lat": 19.1197,
+          "lng": 72.8464,
+          "clusterRadiusMeters": 1200,
+          "linkedHistoricalCasesCount": 2,
+          "linkedHistoricalCases": [],
+          "atmCount": 18,
+          "representativeAtm": "SBI E-Corner & ATM, Andheri East Station Road",
+          "estimatedTimeframe": "Within 60 - 90 mins",
+          "aiExplanation": "Historical pattern analysis correlates this zone with high-frequency cash-out routes for UPI Phishing."
+        }
+      ],
+      "investigationRecommendations": [
+        "Issue immediate Section 91 CrPC alert to State Bank of India and beneficiary banks for account freeze.",
+        "Dispatch local cyber beat patrols to high-risk ATM clusters in Kurla Cluster.",
+        "Preserve CCTV footage at high-probability ATMs within the designated Within 30 - 45 mins cash-out window.",
+        "Upload suspect transaction reference TXN9988776655 to I4C / CFCFRMS portal for coordinated national interdiction."
+      ],
+      "generatedAt": "2026-09-06T09:03:07.517Z",
+      "generatedBy": "Insp. Vikram Rathore",
+      "officerOrganization": "Ministry of Home Affairs - I4C Cyber Crime Unit"
+    },
+    {
       "reportId": "REP-2026-281",
       "complaintId": "CC-TEST-001",
       "title": "TACTICAL CASH-OUT WITHDRAWAL INTELLIGENCE: CC-TEST-001",
@@ -1276,6 +1556,106 @@
   ],
   "activityLogs": [
     {
+      "logId": "log-1788685395212-goun",
+      "userId": "usr-off-001",
+      "userName": "Insp. Vikram Rathore",
+      "userRole": "officer",
+      "action": "OFFICER_LOGIN",
+      "details": "Officer logged in successfully from IP: 127.0.0.1",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T09:03:15.212Z"
+    },
+    {
+      "logId": "log-1788685387520-s9um",
+      "userId": "usr-off-001",
+      "userName": "Insp. Vikram Rathore",
+      "userRole": "officer",
+      "action": "COMPLAINT_ANALYZED",
+      "details": "Complaint CC-2026-7783 processed. Predicted high-risk zones: Kurla Cluster, Andheri East Cluster, Andheri East",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T09:03:07.520Z"
+    },
+    {
+      "logId": "log-1788685383755-gk7a",
+      "userId": "usr-off-001",
+      "userName": "Insp. Vikram Rathore",
+      "userRole": "officer",
+      "action": "OFFICER_LOGIN",
+      "details": "Officer logged in successfully from IP: 127.0.0.1",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T09:03:03.755Z"
+    },
+    {
+      "logId": "log-1788685380108-pqhj",
+      "userId": "usr-off-001",
+      "userName": "Insp. Vikram Rathore",
+      "userRole": "officer",
+      "action": "OFFICER_LOGIN",
+      "details": "Officer logged in successfully from IP: 127.0.0.1",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T09:03:00.108Z"
+    },
+    {
+      "logId": "log-1788685367204-t15y",
+      "userId": "usr-off-001",
+      "userName": "Insp. Vikram Rathore",
+      "userRole": "officer",
+      "action": "OFFICER_LOGIN",
+      "details": "Officer logged in successfully from IP: 127.0.0.1",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T09:02:47.204Z"
+    },
+    {
+      "logId": "log-1788685362685-z1dt",
+      "userId": "usr-off-001",
+      "userName": "Insp. Vikram Rathore",
+      "userRole": "officer",
+      "action": "OFFICER_LOGIN",
+      "details": "Officer logged in successfully from IP: 127.0.0.1",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T09:02:42.685Z"
+    },
+    {
+      "logId": "log-1788685356603-dzpd",
+      "userId": "usr-off-001",
+      "userName": "Insp. Vikram Rathore",
+      "userRole": "officer",
+      "action": "OFFICER_LOGIN",
+      "details": "Officer logged in successfully from IP: 127.0.0.1",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T09:02:36.603Z"
+    },
+    {
+      "logId": "log-1788682650317-cagc",
+      "userId": "usr-officer-wjde9",
+      "userName": "Devansh",
+      "userRole": "officer",
+      "action": "TACTICAL_PATROL_DISPATCH",
+      "details": "Dispatched interception alert for Kurla Cluster (HDFC Bank 24x7 ATM, Kurla West Station Plaza) to Kurla Cluster Police Station",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T08:17:30.317Z"
+    },
+    {
+      "logId": "log-1788682573666-iux1",
+      "userId": "usr-officer-wjde9",
+      "userName": "Devansh",
+      "userRole": "officer",
+      "action": "OFFICER_LOGIN",
+      "details": "Officer logged in successfully from IP: 127.0.0.1",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T08:16:13.666Z"
+    },
+    {
+      "logId": "log-1788682567326-h0aa",
+      "userId": "usr-officer-wjde9",
+      "userName": "Devansh",
+      "userRole": "officer",
+      "action": "PASSWORD_RESET",
+      "details": "Password reset for officer account devanshkatkam800@gmail.com",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-06T08:16:07.326Z"
+    },
+    {
       "logId": "log-1788680639734-jf09",
       "userId": "usr-off-001",
       "userName": "Insp. Vikram Rathore",
@@ -1388,6 +1768,24 @@
   ],
   "notifications": [
     {
+      "id": "notif-1788685387521-t55l",
+      "title": "High Risk Withdrawal Forecast: CC-2026-7783",
+      "message": "Kurla Cluster forecast at 88% probability. Estimated cash-out: Within 30 - 45 mins.",
+      "type": "alert",
+      "complaintId": "CC-2026-7783",
+      "read": false,
+      "createdAt": "2026-09-06T09:03:07.521Z"
+    },
+    {
+      "id": "notif-1788682650315-xtxc",
+      "title": "TACTICAL PATROL DISPATCHED: Kurla Cluster",
+      "message": "Squad alert transmitted to Kurla Cluster Police Station. Target: HDFC Bank 24x7 ATM, Kurla West Station Plaza. Urgency: CRITICAL_INTERCEPT.",
+      "type": "alert",
+      "complaintId": "NCRP-2025-9685",
+      "read": false,
+      "createdAt": "2026-09-06T08:17:30.315Z"
+    },
+    {
       "id": "notif-1788552223186-vgmu",
       "title": "High Risk Withdrawal Forecast: CC-TEST-001",
       "message": "Kurla Cluster forecast at 88% probability. Estimated cash-out: Within 30 - 45 mins.",
@@ -1449,7 +1847,7 @@
       "victimCity": "Mumbai",
       "victimState": "Maharashtra",
       "complaintDescription": "Received an urgent call claiming to be from customer support asking to verify electricity bill refund. Clicked an SMS link that triggered an unauthorized UPI debit.",
-      "status": "Prediction Generated",
+      "status": "Patrol Dispatched",
       "assignedOfficer": {
         "id": "usr-off-001",
         "name": "Insp. Vikram Rathore",
@@ -1532,7 +1930,7 @@
       "amountFrozen": 45000,
       "amountRecovered": 0,
       "createdAt": "2026-09-06T07:35:07.452Z",
-      "updatedAt": "2026-09-06T07:43:59.729Z",
+      "updatedAt": "2026-09-06T08:17:30.316Z",
       "predictionId": "pred-1788680639729-vykn"
     },
     {

@@ -38,7 +38,6 @@ interface PredictionDashboardProps {
   onViewDossier: (reportId?: string, complaintId?: string) => void;
   onRegeneratePrediction: (complaintId: string) => Promise<void>;
   onCaseUpdated?: (updatedComplaint: Complaint) => void;
-  onNavigateToSih?: () => void;
 }
 
 type QueueType = 'all' | 'incoming' | 'high_risk' | 'assigned' | 'recent';
@@ -50,8 +49,7 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
   onViewOnMap,
   onViewDossier,
   onRegeneratePrediction,
-  onCaseUpdated,
-  onNavigateToSih
+  onCaseUpdated
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedQueue, setSelectedQueue] = useState<QueueType>('all');
@@ -175,230 +173,266 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
       : 84;
   const totalLossUnderSurveillance = complaints.reduce((sum, c) => sum + (c.amountLost || 0), 0);
 
+  // 4 Primary Statistics
+  const totalComplaintsCount = complaints.length;
+  const activeInvestigationsCount = complaints.filter(
+    (c) => !['Case Closed', 'Resolved', 'Closed'].includes(c.status)
+  ).length;
+  const highRiskCasesCount = highRiskCount;
+  const totalRecoveryAmount = complaints.reduce(
+    (sum, c) => sum + (c.amountRecovered || c.amountFrozen || 0),
+    0
+  );
+
+  const formatCurrency = (val: number) => {
+    if (val >= 10000000) return `₹${(val / 10000000).toFixed(2)} Cr`;
+    if (val >= 100000) return `₹${(val / 100000).toFixed(2)} Lakh`;
+    return `₹${val.toLocaleString('en-IN')}`;
+  };
+
   const getPriorityBadgeClass = (priority?: string) => {
     switch (priority) {
       case 'Critical':
-        return 'bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 border-rose-300 dark:border-rose-800';
+        return 'bg-rose-50 text-[#ef4444] border-rose-200';
       case 'High':
-        return 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800';
+        return 'bg-amber-50 text-[#f59e0b] border-amber-200';
       case 'Medium':
-        return 'bg-blue-100 dark:bg-blue-950/80 text-blue-800 dark:text-blue-300 border-blue-300 dark:border-blue-800';
+        return 'bg-blue-50 text-[#2563eb] border-blue-200';
       case 'Low':
       default:
-        return 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700';
+        return 'bg-slate-50 text-slate-600 border-slate-200';
     }
   };
 
   return (
-    <div className="space-y-6">
-      {/* Top Header & Metrics Banner */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+    <div className="space-y-8">
+      {/* 1. Header Hero Banner */}
+      <div className="glass-card p-6 sm:p-8 rounded-2xl shadow-xl shadow-slate-200/40 relative overflow-hidden">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 relative z-10">
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 uppercase tracking-wider">
-                MHA TACTICAL PREDICTIVE FRAMEWORK
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-widest bg-blue-50 text-[#1e3a8a] border border-blue-200/80 uppercase">
+                NATIONAL CYBERCRIME INTELLIGENCE COMMAND
               </span>
-              <span className="text-xs text-slate-400">&bull;</span>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
-                Corridor Cluster Model & Explainable AI Grounding
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[11px] font-bold text-[#10b981]">
+                Real-Time Surveillance Active
               </span>
             </div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-              Cash Withdrawal Prediction & Case Management
+
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              Investigating Officer Command Dashboard
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
-              Forecasting high-risk cash withdrawal zones, managing citizen complaints across the unified lifecycle, assigning field investigators, and auditing AI rationales.
+            <p className="text-sm text-slate-500 mt-1 max-w-3xl leading-relaxed">
+              Predictive cash withdrawal corridor intelligence, ATM cluster mapping, and multi-agency interception workflow.
             </p>
-            {onNavigateToSih && (
-              <div className="mt-2.5 flex items-center gap-2">
-                <button
-                  onClick={onNavigateToSih}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 text-xs font-bold hover:bg-indigo-100 dark:hover:bg-indigo-900/60 transition-colors shadow-xs cursor-pointer"
-                >
-                  <Target className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Launch SIH Random Forest Cashout Forecaster</span>
-                  <span className="bg-indigo-600 text-white text-[10px] px-1.5 py-0.2 rounded font-black">
-                    87.2% Acc
-                  </span>
-                </button>
-              </div>
-            )}
           </div>
 
-          {/* Quick Metrics */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
-              <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Total Dockets</div>
-              <div className="text-lg font-bold text-slate-900 dark:text-white mt-0.5">{complaints.length}</div>
-            </div>
-
-            <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900/60">
-              <div className="text-[10px] font-semibold text-purple-700 dark:text-purple-300 uppercase tracking-wider">Incoming Citizen</div>
-              <div className="text-lg font-bold text-purple-700 dark:text-purple-300 mt-0.5">{incomingCount}</div>
-            </div>
-
-            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60">
-              <div className="text-[10px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">High Risk / Critical</div>
-              <div className="text-lg font-bold text-rose-700 dark:text-rose-400 mt-0.5">{highRiskCount}</div>
-            </div>
-
-            <div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60">
-              <div className="text-[10px] font-semibold text-blue-700 dark:text-blue-400 uppercase tracking-wider">Loss Monitored</div>
-              <div className="text-lg font-bold text-slate-900 dark:text-white mt-0.5">
-                ₹{(totalLossUnderSurveillance / 100000).toFixed(1)}L
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="p-3.5 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-100 text-right">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                Predictive Accuracy
+              </div>
+              <div className="text-xl font-black text-[#1e3a8a] font-mono">
+                {avgConfidence}% Conf.
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* 1. Officer Queues Filter Bar (Requested Queue System) */}
-        <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold text-slate-500 mr-1 flex items-center gap-1">
-              <Layers className="w-3.5 h-3.5" />
-              <span>Queues:</span>
+      {/* 2. THE 4 PRIMARY STATISTICS CARDS (LARGER, FLOATING, CLEAN) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* Card 1: Total Complaints */}
+        <div className="glass-card glass-card-hover p-6 rounded-2xl shadow-lg shadow-slate-200/40 flex flex-col justify-between group cursor-default">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-black uppercase tracking-wider text-slate-500">
+              Total Complaints
             </span>
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#1e3a8a] flex items-center justify-center transition-transform group-hover:scale-110 shadow-xs">
+              <Shield className="w-6 h-6 text-[#1e3a8a]" />
+            </div>
+          </div>
 
-            <button
-              onClick={() => setSelectedQueue('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer ${
-                selectedQueue === 'all'
-                  ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xs'
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
-              }`}
-            >
-              <span>All Cases</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-700 text-white dark:bg-slate-200 dark:text-slate-900 font-extrabold">
-                {casesWithPredictions.length}
-              </span>
-            </button>
-
-            <button
-              onClick={() => setSelectedQueue('incoming')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer ${
-                selectedQueue === 'incoming'
-                  ? 'bg-purple-700 text-white shadow-xs'
-                  : 'bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900/60 border border-purple-200 dark:border-purple-800'
-              }`}
-            >
-              <Inbox className="w-3.5 h-3.5" />
-              <span>Incoming Victim Complaints</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-purple-900 text-purple-200 font-extrabold">
-                {incomingCount}
-              </span>
-            </button>
-
-            <button
-              onClick={() => setSelectedQueue('high_risk')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer ${
-                selectedQueue === 'high_risk'
-                  ? 'bg-rose-700 text-white shadow-xs'
-                  : 'bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-800'
-              }`}
-            >
-              <Flame className="w-3.5 h-3.5" />
-              <span>High Risk Cases</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-rose-900 text-rose-200 font-extrabold">
-                {highRiskCount}
-              </span>
-            </button>
-
-            <button
-              onClick={() => setSelectedQueue('assigned')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer ${
-                selectedQueue === 'assigned'
-                  ? 'bg-blue-700 text-white shadow-xs'
-                  : 'bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800'
-              }`}
-            >
-              <UserCheck className="w-3.5 h-3.5" />
-              <span>Assigned Cases</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-blue-900 text-blue-200 font-extrabold">
-                {assignedCount}
-              </span>
-            </button>
-
-            <button
-              onClick={() => setSelectedQueue('recent')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer ${
-                selectedQueue === 'recent'
-                  ? 'bg-emerald-700 text-white shadow-xs'
-                  : 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800'
-              }`}
-            >
-              <Activity className="w-3.5 h-3.5" />
-              <span>Recently Updated Cases</span>
-              <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-900 text-emerald-200 font-extrabold">
-                {recentCount}
-              </span>
-            </button>
+          <div className="mt-5">
+            <div className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              {totalComplaintsCount}
+            </div>
+            <div className="flex items-center gap-1.5 mt-2 text-xs font-semibold text-slate-500">
+              <span className="inline-block w-2 h-2 rounded-full bg-[#1e3a8a]" />
+              <span>National intake repository</span>
+            </div>
           </div>
         </div>
 
-        {/* 2. Priority & Risk Filter Toolbar */}
-        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
-          <div className="relative w-full md:w-80">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400" />
+        {/* Card 2: Active Investigations */}
+        <div className="glass-card glass-card-hover p-6 rounded-2xl shadow-lg shadow-slate-200/40 flex flex-col justify-between group cursor-default">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-black uppercase tracking-wider text-slate-500">
+              Active Investigations
+            </span>
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-[#2563eb] flex items-center justify-center transition-transform group-hover:scale-110 shadow-xs">
+              <Activity className="w-6 h-6 text-[#2563eb]" />
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <div className="text-3xl sm:text-4xl font-black text-[#2563eb] tracking-tight">
+              {activeInvestigationsCount}
+            </div>
+            <div className="flex items-center gap-1.5 mt-2 text-xs font-semibold text-[#2563eb]">
+              <span className="inline-block w-2 h-2 rounded-full bg-[#2563eb] animate-pulse" />
+              <span>Under field surveillance</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: High Risk Cases */}
+        <div className="glass-card glass-card-hover p-6 rounded-2xl shadow-lg shadow-slate-200/40 flex flex-col justify-between group cursor-default">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-black uppercase tracking-wider text-slate-500">
+              High Risk Cases
+            </span>
+            <div className="w-12 h-12 rounded-2xl bg-rose-50 text-[#ef4444] flex items-center justify-center transition-transform group-hover:scale-110 shadow-xs">
+              <AlertTriangle className="w-6 h-6 text-[#ef4444]" />
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <div className="text-3xl sm:text-4xl font-black text-[#ef4444] tracking-tight">
+              {highRiskCasesCount}
+            </div>
+            <div className="flex items-center gap-1.5 mt-2 text-xs font-semibold text-[#ef4444]">
+              <span className="inline-block w-2 h-2 rounded-full bg-[#ef4444] animate-ping" />
+              <span>Imminent cash-out threat</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 4: Recovery Amount */}
+        <div className="glass-card glass-card-hover p-6 rounded-2xl shadow-lg shadow-slate-200/40 flex flex-col justify-between group cursor-default">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-black uppercase tracking-wider text-slate-500">
+              Recovery Amount
+            </span>
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-[#10b981] flex items-center justify-center transition-transform group-hover:scale-110 shadow-xs">
+              <Coins className="w-6 h-6 text-[#10b981]" />
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <div className="text-2xl sm:text-3xl lg:text-3xl font-black text-[#10b981] tracking-tight">
+              {formatCurrency(totalRecoveryAmount)}
+            </div>
+            <div className="flex items-center gap-1.5 mt-2 text-xs font-semibold text-[#10b981]">
+              <span className="inline-block w-2 h-2 rounded-full bg-[#10b981]" />
+              <span>Lien frozen & restituted</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Search & Queue Selector */}
+      <div className="glass-card p-5 rounded-2xl shadow-md shadow-slate-200/40 space-y-4">
+        {/* Queue Selector Tabs */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          <button
+            onClick={() => setSelectedQueue('all')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-2 ${
+              selectedQueue === 'all'
+                ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-md shadow-blue-900/20'
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            <Shield className="w-3.5 h-3.5" />
+            <span>All Cases ({casesWithPredictions.length})</span>
+          </button>
+
+          <button
+            onClick={() => setSelectedQueue('high_risk')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-2 ${
+              selectedQueue === 'high_risk'
+                ? 'bg-[#ef4444] text-white shadow-md shadow-rose-900/20'
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            <AlertTriangle className="w-3.5 h-3.5" />
+            <span>High Risk ({highRiskCount})</span>
+          </button>
+
+          <button
+            onClick={() => setSelectedQueue('incoming')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-2 ${
+              selectedQueue === 'incoming'
+                ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-md shadow-blue-900/20'
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            <Inbox className="w-3.5 h-3.5" />
+            <span>Victim Reports ({incomingCount})</span>
+          </button>
+
+          <button
+            onClick={() => setSelectedQueue('assigned')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-2 ${
+              selectedQueue === 'assigned'
+                ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-md shadow-blue-900/20'
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            <UserCheck className="w-3.5 h-3.5" />
+            <span>Assigned Cases ({assignedCount})</span>
+          </button>
+
+          <button
+            onClick={() => setSelectedQueue('recent')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-2 ${
+              selectedQueue === 'recent'
+                ? 'bg-gradient-to-r from-[#1e3a8a] to-[#2563eb] text-white shadow-md shadow-blue-900/20'
+                : 'text-slate-600 hover:bg-slate-100'
+            }`}
+          >
+            <Activity className="w-3.5 h-3.5" />
+            <span>Recently Updated ({recentCount})</span>
+          </button>
+        </div>
+
+        {/* Search input & Priority filter */}
+        <div className="flex flex-col sm:flex-row items-center gap-3 pt-3 border-t border-slate-200/70">
+          <div className="relative flex-1 w-full">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
+              placeholder="Search by Complaint ID, Fraud Type, City, Bank, UTR, or Assigned IO..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search ID, Officer, Victim, Bank, City..."
-              className="w-full pl-9 pr-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] focus:bg-white transition-all"
             />
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto justify-start md:justify-end">
-            {/* Priority Filter */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-slate-400 text-[11px] font-semibold">Priority:</span>
-              {(['All', 'Critical', 'High', 'Medium', 'Low'] as const).map((p) => (
-                <button
-                  key={p}
-                  onClick={() => setSelectedPriorityFilter(p)}
-                  className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-colors ${
-                    selectedPriorityFilter === p
-                      ? p === 'Critical'
-                        ? 'bg-rose-600 text-white'
-                        : p === 'High'
-                        ? 'bg-amber-600 text-white'
-                        : p === 'Medium'
-                        ? 'bg-blue-600 text-white'
-                        : p === 'Low'
-                        ? 'bg-slate-600 text-white'
-                        : 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'
-                  }`}
-                >
-                  {p}
-                </button>
-              ))}
-            </div>
+          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0">
+            <select
+              value={selectedPriorityFilter}
+              onChange={(e) => setSelectedPriorityFilter(e.target.value as any)}
+              className="px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] cursor-pointer"
+            >
+              <option value="All">All Priorities</option>
+              <option value="Critical">Critical Priority</option>
+              <option value="High">High Priority</option>
+              <option value="Medium">Medium Priority</option>
+              <option value="Low">Low Priority</option>
+            </select>
 
-            {/* Risk Filter */}
-            <div className="flex items-center gap-1.5">
-              <span className="text-slate-400 text-[11px] font-semibold">Risk:</span>
-              {(['All', 'High', 'Medium', 'Low'] as const).map((lvl) => (
-                <button
-                  key={lvl}
-                  onClick={() => setSelectedRiskFilter(lvl)}
-                  className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-colors ${
-                    selectedRiskFilter === lvl
-                      ? lvl === 'High'
-                        ? 'bg-rose-600 text-white'
-                        : lvl === 'Medium'
-                        ? 'bg-amber-600 text-white'
-                        : lvl === 'Low'
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-blue-700 text-white'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200'
-                  }`}
-                >
-                  {lvl}
-                </button>
-              ))}
-            </div>
+            <select
+              value={selectedRiskFilter}
+              onChange={(e) => setSelectedRiskFilter(e.target.value as any)}
+              className="px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#1e3a8a] cursor-pointer"
+            >
+              <option value="All">All Risk Bands</option>
+              <option value="High">High Risk (&ge;75%)</option>
+              <option value="Medium">Medium Risk (50-74%)</option>
+              <option value="Low">Low Risk (&lt;50%)</option>
+            </select>
           </div>
         </div>
       </div>
@@ -406,7 +440,7 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
       {/* Case Dockets List */}
       <div className="space-y-4">
         {filteredCases.length === 0 ? (
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center text-slate-500">
+          <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500">
             <Compass className="w-8 h-8 text-slate-400 mx-auto mb-2" />
             <p className="text-sm font-semibold">No complaints or prediction models found matching selected queue.</p>
             <p className="text-xs text-slate-400 mt-1">
@@ -434,19 +468,19 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
             return (
               <div
                 key={complaint.complaintId}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs hover:border-blue-500/50 transition-all space-y-4"
+                className="glass-card glass-card-hover rounded-2xl p-6 sm:p-7 shadow-lg shadow-slate-200/40 space-y-5 transition-all duration-300 border border-slate-200/80"
               >
                 {/* Header: ID, Priority, Status, Filer Info, Amounts */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/70">
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-mono font-bold text-base text-slate-900 dark:text-white">
+                      <span className="font-mono font-black text-lg text-slate-900 tracking-tight">
                         {complaint.complaintId}
                       </span>
 
                       {/* Priority Tag */}
                       <span
-                        className={`px-2 py-0.5 rounded text-[11px] font-black border uppercase tracking-wide ${getPriorityBadgeClass(
+                        className={`px-2.5 py-0.5 rounded-full text-[10px] font-black border uppercase tracking-wider ${getPriorityBadgeClass(
                           priorityLabel
                         )}`}
                       >
@@ -454,68 +488,68 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                       </span>
 
                       {/* Status Tag */}
-                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-50 text-[#1e3a8a] border border-blue-200">
                         {complaint.status}
                       </span>
 
                       {/* Citizen Portal Intake Badge */}
                       {complaint.victimId && (
-                        <span className="px-2 py-0.5 rounded text-[11px] font-extrabold bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-purple-50 text-purple-700 border border-purple-200 flex items-center gap-1">
                           <Inbox className="w-3 h-3" />
-                          <span>Citizen Filer: {complaint.victimName || 'Citizen'}</span>
+                          <span>Citizen: {complaint.victimName || 'Citizen'}</span>
                         </span>
                       )}
 
                       {/* Assigned Officer Tag */}
-                      <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 flex items-center gap-1 border border-slate-200/60">
                         <UserCheck className="w-3 h-3 text-emerald-600" />
                         <span>IO: {complaint.assignedOfficer?.name || complaint.officerName || 'Unassigned'}</span>
                       </span>
                     </div>
 
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
-                      Reported: {complaint.victimCity}, {complaint.victimState} &bull; Channel:{' '}
-                      <span className="font-semibold text-slate-700 dark:text-slate-300">{complaint.bankName}</span>{' '}
-                      &bull; Ref UTR: <span className="font-mono">{complaint.transactionId}</span>
-                      {complaint.victimMobile && <span> &bull; Mob: {complaint.victimMobile}</span>}
+                    <p className="text-xs text-slate-500 mt-2 font-medium">
+                      Reported: <span className="text-slate-700 font-semibold">{complaint.victimCity}, {complaint.victimState}</span> &bull; Banking Node:{' '}
+                      <span className="font-bold text-slate-900">{complaint.bankName}</span>{' '}
+                      &bull; Ref UTR: <span className="font-mono text-slate-600">{complaint.transactionId}</span>
+                      {complaint.victimMobile && <span> &bull; Mobile: {complaint.victimMobile}</span>}
                     </p>
                   </div>
 
                   {/* Financial Metrics & Risk Score */}
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-5">
                     <div className="text-right">
-                      <div className="text-[10px] uppercase font-semibold text-slate-400">Loss / Frozen</div>
-                      <div className="text-base font-extrabold text-slate-900 dark:text-white">
+                      <div className="text-[10px] uppercase font-bold text-slate-400">Total Loss / Lien</div>
+                      <div className="text-lg sm:text-xl font-black text-slate-900">
                         ₹{complaint.amountLost.toLocaleString('en-IN')}
                       </div>
                       {complaint.amountFrozen ? (
-                        <div className="text-[11px] font-bold text-indigo-600 dark:text-indigo-400">
-                          ₹{complaint.amountFrozen.toLocaleString('en-IN')} Lien
+                        <div className="text-xs font-black text-[#10b981]">
+                          ₹{complaint.amountFrozen.toLocaleString('en-IN')} Frozen Lien
                         </div>
                       ) : null}
                     </div>
 
                     {prediction && (
-                      <div className="flex items-center gap-2 pl-3 border-l border-slate-200 dark:border-slate-800">
+                      <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
                         <div className="text-center">
-                          <div className="text-[10px] uppercase font-semibold text-slate-400">Risk Score</div>
+                          <div className="text-[10px] uppercase font-bold text-slate-400">Risk Score</div>
                           <div
-                            className={`text-lg font-black ${
+                            className={`text-xl font-black ${
                               prediction.riskScore >= 75
-                                ? 'text-rose-600 dark:text-rose-400'
+                                ? 'text-[#ef4444]'
                                 : prediction.riskScore >= 55
-                                ? 'text-amber-600 dark:text-amber-400'
-                                : 'text-emerald-600 dark:text-emerald-400'
+                                ? 'text-[#f59e0b]'
+                                : 'text-[#10b981]'
                             }`}
                           >
                             {prediction.riskScore}
-                            <span className="text-[10px] text-slate-400 font-normal">/100</span>
+                            <span className="text-xs text-slate-400 font-normal">/100</span>
                           </div>
                         </div>
 
                         <div className="text-center pl-2">
-                          <div className="text-[10px] uppercase font-semibold text-slate-400">Confidence</div>
-                          <div className="text-lg font-black text-blue-600 dark:text-blue-400">
+                          <div className="text-[10px] uppercase font-bold text-slate-400">Confidence</div>
+                          <div className="text-xl font-black text-[#2563eb]">
                             {prediction.confidenceScore}%
                           </div>
                         </div>
@@ -530,7 +564,7 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                     {/* Left: Top Predicted Zones List */}
                     <div className="lg:col-span-6 space-y-2.5">
                       <div className="flex items-center justify-between">
-                        <div className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                        <div className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
                           <Target className="w-3.5 h-3.5 text-rose-500" />
                           <span>Top Predicted Cash Withdrawal Zones</span>
                         </div>
@@ -540,8 +574,8 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                       <div className="space-y-2">
                         {prediction.topPredictedZones.map((zone, idx) => (
                           <div
-                            key={zone.zoneId}
-                            className="p-3 rounded-xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 text-xs hover:border-blue-500 transition-colors cursor-pointer"
+                            key={`${zone.zoneId}-${idx}`}
+                            className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs hover:border-blue-500 transition-colors cursor-pointer"
                             onClick={() => onViewOnMap(zone, complaint)}
                           >
                             <div className="flex items-center justify-between gap-2 mb-1.5">
@@ -549,7 +583,7 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                                 <span className="w-5 h-5 rounded-full bg-blue-700 text-white font-bold text-[10px] flex items-center justify-center shrink-0">
                                   {idx + 1}
                                 </span>
-                                <span className="font-bold text-slate-900 dark:text-white text-sm">
+                                <span className="font-bold text-slate-900 text-sm">
                                   {zone.zoneName}
                                 </span>
                                 <span className="text-[11px] text-slate-500">
@@ -560,17 +594,17 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                               <span
                                 className={`px-2 py-0.5 rounded text-[11px] font-extrabold ${
                                   zone.probability >= 80
-                                    ? 'bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300'
+                                    ? 'bg-rose-100 text-rose-700'
                                     : zone.probability >= 70
-                                    ? 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300'
-                                    : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300'
+                                    ? 'bg-amber-100 text-amber-700'
+                                    : 'bg-emerald-100 text-emerald-700'
                                 }`}
                               >
                                 {zone.probability}%
                               </span>
                             </div>
 
-                            <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mb-2">
+                            <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden mb-2">
                               <div
                                 className={`h-full rounded-full ${
                                   zone.probability >= 80
@@ -583,18 +617,18 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                               />
                             </div>
 
-                            <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 gap-2">
+                            <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-500 gap-2">
                               <div className="flex items-center gap-1">
                                 <Building className="w-3.5 h-3.5 text-slate-400" />
                                 <span className="truncate max-w-[200px]">{zone.representativeAtm}</span>
                               </div>
                               <div className="flex items-center gap-2 shrink-0">
-                                <span className="flex items-center gap-1 text-slate-600 dark:text-slate-300 font-medium">
+                                <span className="flex items-center gap-1 text-slate-600 font-medium">
                                   <Clock className="w-3 h-3 text-slate-400" />
                                   {zone.estimatedTimeframe}
                                 </span>
                                 <span>&bull;</span>
-                                <span className="text-blue-600 dark:text-blue-400 font-semibold">
+                                <span className="text-blue-600 font-semibold">
                                   {zone.linkedHistoricalCasesCount} Linked Cases
                                 </span>
                               </div>
@@ -606,34 +640,34 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
 
                     {/* Right: AI Modus Operandi & Actionable Officer Steps */}
                     <div className="lg:col-span-6 flex flex-col justify-between space-y-3">
-                      <div className="p-3.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-900/60 text-xs">
-                        <div className="flex items-center gap-1.5 font-bold text-blue-900 dark:text-blue-300 mb-1">
-                          <Cpu className="w-3.5 h-3.5 text-blue-700 dark:text-blue-400" />
+                      <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200/80 text-xs">
+                        <div className="flex items-center gap-1.5 font-bold text-blue-900 mb-1">
+                          <Cpu className="w-3.5 h-3.5 text-blue-700" />
                           <span>AI Pattern Analysis & Modus Operandi</span>
                         </div>
-                        <div className="font-semibold text-slate-800 dark:text-slate-200 mb-1">
+                        <div className="font-semibold text-slate-800 mb-1">
                           {prediction.scamClassification}
                         </div>
-                        <p className="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed mb-2">
+                        <p className="text-slate-600 text-[11px] leading-relaxed mb-2">
                           {prediction.patternAnalysis}
                         </p>
-                        <div className="p-2 rounded bg-white dark:bg-slate-900 border border-blue-100 dark:border-blue-900/40 text-[11px] text-slate-700 dark:text-slate-300 italic">
+                        <div className="p-2 rounded bg-white border border-blue-100 text-[11px] text-slate-700 italic">
                           "{prediction.aiAnalysisText}"
                         </div>
                       </div>
 
                       {/* Actionable Steps */}
                       <div className="space-y-1.5">
-                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                        <div className="text-[11px] font-bold uppercase tracking-wider text-slate-600">
                           Actionable Officer Interception Steps
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
                           {prediction.investigationRecommendations.slice(0, 4).map((rec, i) => (
                             <div
                               key={i}
-                              className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex items-start gap-1.5"
+                              className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 flex items-start gap-1.5"
                             >
-                              <span className="w-4 h-4 rounded-full bg-blue-100 dark:bg-blue-900/70 text-blue-700 dark:text-blue-300 text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                              <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
                                 {i + 1}
                               </span>
                               <span className="line-clamp-2">{rec}</span>
@@ -655,7 +689,7 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                             expandedExplainableId === complaint.complaintId ? null : complaint.complaintId
                           )
                         }
-                        className="text-xs font-bold text-purple-700 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 flex items-center gap-1.5 cursor-pointer"
+                        className="text-xs font-bold text-purple-700 hover:text-purple-800 flex items-center gap-1.5 cursor-pointer"
                       >
                         <Sparkles className="w-3.5 h-3.5" />
                         <span>
@@ -682,7 +716,7 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                 )}
 
                 {/* Action Bar for this Case */}
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
                   <div className="flex items-center gap-2 text-xs text-slate-500">
                     <span className="flex items-center gap-1 font-medium">
                       <Clock className="w-3.5 h-3.5 text-slate-400" />
@@ -708,7 +742,7 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                       type="button"
                       onClick={() => handleRegenerate(complaint.complaintId)}
                       disabled={reloadingComplaintId === complaint.complaintId}
-                      className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 text-xs font-semibold flex items-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
                     >
                       <RefreshCw
                         className={`w-3.5 h-3.5 ${
@@ -721,7 +755,7 @@ export const PredictionDashboard: React.FC<PredictionDashboardProps> = ({
                     <button
                       type="button"
                       onClick={() => onViewDossier(report?.reportId, complaint.complaintId)}
-                      className="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <FileText className="w-3.5 h-3.5 text-blue-600" />
                       <span>Dossier</span>

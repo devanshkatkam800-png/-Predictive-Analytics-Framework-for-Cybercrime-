@@ -156,23 +156,23 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-850">
+        <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-blue-700 text-white flex items-center justify-center font-bold">
               <Shield className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-base text-slate-900 dark:text-white">
+                <h3 className="font-extrabold text-base text-slate-900">
                   Officer Action: {complaint.complaintId}
                 </h3>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800">
                   {complaint.fraudType}
                 </span>
               </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-500 mt-0.5">
                 Loss: ₹{complaint.amountLost.toLocaleString('en-IN')} &bull; Victim: {complaint.victimName || 'Citizen'} &bull; Bank: {complaint.bankName}
               </p>
             </div>
@@ -180,20 +180,20 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-slate-200 dark:border-slate-800 bg-slate-100/60 dark:bg-slate-850 text-xs font-bold px-5 pt-2">
+        <div className="flex border-b border-slate-200 bg-slate-100/60 text-xs font-bold px-5 pt-2">
           <button
             onClick={() => setActiveSubTab('status')}
             className={`pb-2.5 px-3 border-b-2 flex items-center gap-1.5 transition-colors ${
               activeSubTab === 'status'
-                ? 'border-blue-600 text-blue-600 dark:text-blue-400'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <Clock className="w-3.5 h-3.5" />
@@ -204,8 +204,8 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
             onClick={() => setActiveSubTab('assign')}
             className={`pb-2.5 px-3 border-b-2 flex items-center gap-1.5 transition-colors ${
               activeSubTab === 'assign'
-                ? 'border-blue-600 text-blue-600 dark:text-blue-400'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <UserCheck className="w-3.5 h-3.5" />
@@ -216,8 +216,8 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
             onClick={() => setActiveSubTab('recovery')}
             className={`pb-2.5 px-3 border-b-2 flex items-center gap-1.5 transition-colors ${
               activeSubTab === 'recovery'
-                ? 'border-blue-600 text-blue-600 dark:text-blue-400'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
             <Coins className="w-3.5 h-3.5" />
@@ -227,13 +227,13 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
 
         {/* Notifications / Alerts */}
         {errorMsg && (
-          <div className="m-5 mb-0 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 text-xs text-rose-700 dark:text-rose-300 flex items-center gap-2">
+          <div className="m-5 mb-0 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
         {successMsg && (
-          <div className="m-5 mb-0 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-900 text-xs text-emerald-700 dark:text-emerald-300 flex items-center gap-2">
+          <div className="m-5 mb-0 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-700 flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>{successMsg}</span>
           </div>
@@ -245,13 +245,13 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
             <form onSubmit={handleUpdateStatusAndPriority} className="space-y-4 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-700 mb-1">
                     Complaint Lifecycle Status
                   </label>
                   <select
                     value={selectedStatus}
                     onChange={(e) => setSelectedStatus(e.target.value)}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:outline-none focus:border-blue-600"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-medium focus:outline-none focus:border-blue-600"
                   >
                     <option value="New">New</option>
                     <option value="Under Review">Under Review</option>
@@ -268,13 +268,13 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-700 mb-1">
                     Case Priority Level
                   </label>
                   <select
                     value={selectedPriority}
                     onChange={(e) => setSelectedPriority(e.target.value as PriorityLevel)}
-                    className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-bold focus:outline-none focus:border-blue-600"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-bold focus:outline-none focus:border-blue-600"
                   >
                     <option value="Critical">Critical (Risk Score 90+)</option>
                     <option value="High">High (Risk Score 75-89)</option>
@@ -285,7 +285,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block font-bold text-slate-700 mb-1">
                   Officer Case Progression Note (Visible in Citizen Timeline)
                 </label>
                 <textarea
@@ -293,11 +293,11 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                   value={caseNote}
                   onChange={(e) => setCaseNote(e.target.value)}
                   placeholder="e.g. Beneficiary account freeze verified. Physical ATM surveillance dispatched to suspected corridor..."
-                  className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600"
+                  className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600"
                 />
               </div>
 
-              <div className="p-3 rounded-xl bg-blue-50/60 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900/60 text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
+              <div className="p-3 rounded-xl bg-blue-50/60 border border-blue-200 text-slate-600 text-[11px] leading-relaxed">
                 <strong>Unified Lifecycle Sync:</strong> Changing this status advances the citizen's 7-stage visual tracker, triggers an automated notification to their portal, and updates the I4C central registry.
               </div>
 
@@ -305,7 +305,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 font-bold"
+                  className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 font-bold"
                 >
                   Cancel
                 </button>
@@ -333,7 +333,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                   className={`px-3 py-1.5 rounded-lg border text-xs font-bold transition-all cursor-pointer ${
                     selectedOfficerId === 'usr-off-001'
                       ? 'bg-blue-700 text-white border-blue-700 shadow-xs'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200'
+                      : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
                   }`}
                 >
                   ✓ Assign to Self (Insp. Vikram Rathore)
@@ -347,7 +347,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                   className={`px-3 py-1.5 rounded-lg border text-xs font-bold transition-all cursor-pointer ${
                     selectedOfficerId !== 'usr-off-001'
                       ? 'bg-purple-700 text-white border-purple-700 shadow-xs'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-200'
+                      : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
                   }`}
                 >
                   Assign to Another Officer
@@ -355,13 +355,13 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block font-bold text-slate-700 mb-1">
                   Select Investigating Officer
                 </label>
                 <select
                   value={selectedOfficerId}
                   onChange={(e) => setSelectedOfficerId(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:outline-none focus:border-blue-600"
+                  className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-medium focus:outline-none focus:border-blue-600"
                 >
                   {officersList.map((o) => (
                     <option key={o.id} value={o.id}>
@@ -372,7 +372,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                <label className="block font-bold text-slate-700 mb-1">
                   Directives & Investigation Instructions
                 </label>
                 <textarea
@@ -380,11 +380,11 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                   value={assignmentInstructions}
                   onChange={(e) => setAssignmentInstructions(e.target.value)}
                   placeholder="Provide tactical instructions for ATM corridor sweep, bank liaison, or forensic evidence collection..."
-                  className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-blue-600"
+                  className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600"
                 />
               </div>
 
-              <div className="p-3 rounded-xl bg-purple-50/60 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900/60 text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
+              <div className="p-3 rounded-xl bg-purple-50/60 border border-purple-200 text-slate-600 text-[11px] leading-relaxed">
                 <strong>Direct Officer Assignment:</strong> The selected officer will receive this docket in their Assigned Cases queue. The victim will see the investigator's name, badge number, and division in their dashboard.
               </div>
 
@@ -392,7 +392,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 font-bold"
+                  className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 font-bold"
                 >
                   Cancel
                 </button>
@@ -412,7 +412,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
             <form onSubmit={handleUpdateRecovery} className="space-y-4 text-xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-700 mb-1">
                     Amount Frozen under Lien (₹)
                   </label>
                   <input
@@ -420,7 +420,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                     value={amountFrozen}
                     onChange={(e) => setAmountFrozen(e.target.value)}
                     placeholder="e.g. 85000"
-                    className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-mono font-bold focus:outline-none focus:border-blue-600"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-mono font-bold focus:outline-none focus:border-blue-600"
                   />
                   <span className="text-[10px] text-slate-400 mt-1 block">
                     Funds currently locked in beneficiary/mule bank accounts.
@@ -428,7 +428,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                 </div>
 
                 <div>
-                  <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-700 mb-1">
                     Amount Restituted to Victim (₹)
                   </label>
                   <input
@@ -436,7 +436,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                     value={amountRecovered}
                     onChange={(e) => setAmountRecovered(e.target.value)}
                     placeholder="e.g. 50000"
-                    className="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white font-mono font-bold focus:outline-none focus:border-blue-600"
+                    className="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 font-mono font-bold focus:outline-none focus:border-blue-600"
                   />
                   <span className="text-[10px] text-slate-400 mt-1 block">
                     Judicially reversed and credited back to victim's account.
@@ -444,7 +444,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60 text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
+              <div className="p-3 rounded-xl bg-emerald-50/60 border border-emerald-200 text-slate-600 text-[11px] leading-relaxed">
                 <strong>Restitution Progress:</strong> Total Siphoned: ₹{complaint.amountLost.toLocaleString('en-IN')}. Restitution updates immediately update the victim's recovery status progress bar and restitution rate.
               </div>
 
@@ -452,7 +452,7 @@ export const OfficerCaseActionModal: React.FC<OfficerCaseActionModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 font-bold"
+                  className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 font-bold"
                 >
                   Cancel
                 </button>

@@ -518,8 +518,130 @@ REQUIREMENTS:
   };
 }
 
+// Pre-cached verified authoritative responses for common citizen cyber queries (<1s response, 3-5 concise bullet points)
+const CITIZEN_CACHE: Record<
+  string,
+  {
+    advice: string;
+    keySteps: string[];
+    emergencyHelpline: string;
+  }
+> = {
+  golden_hour: {
+    advice: `### 🚨 Immediate "Golden Hour" Protocol
+- **Dial 1930 immediately**: Report transaction details (Bank, UTR, suspect UPI/account) to the National Cyber Financial Fraud Reporting System within 2 hours to trigger an automated bank lien freeze.
+- **Freeze your accounts**: Contact your bank or use mobile banking to immediately hotlist compromised debit cards, block UPI VPAs, and freeze netbanking access.
+- **Preserve digital evidence**: Capture unaltered screenshots of the debit SMS, payment gateway receipts, and suspect phone numbers before filing on cybercrime.gov.in.`,
+    keySteps: [
+      'Call 1930 within the 2-hour Golden Hour window.',
+      'Request your bank branch to issue an emergency debit freeze and dispute UTR.',
+      'Log into cybercrime.gov.in with transaction details to lock beneficiary mule accounts.'
+    ],
+    emergencyHelpline: 'National Cyber Crime Helpline: 1930 (Toll-Free 24x7) | cybercrime.gov.in'
+  },
+  bank_security: {
+    advice: `### 🛡️ How to Secure Bank Account & UPI
+- **Revoke UPI VPAs & Netbanking**: Open your official mobile banking app to temporarily disable UPI services, de-link third-party payment apps (GPay, PhonePe, Paytm), and turn off online/international transactions.
+- **Reset critical credentials**: Change your ATM Debit Card PIN at a physical branch ATM and update your Netbanking login and transaction passwords from an uncompromised device.
+- **Audit device security**: Immediately uninstall any remote screen-sharing tools (AnyDesk, TeamViewer, RustDesk) or unknown APK files, and verify call-forwarding settings with \`*#21#\`.`,
+    keySteps: [
+      'Disable netbanking and de-link UPI VPAs via mobile banking settings.',
+      'Change ATM PIN, banking passwords, and email 2FA from a separate clean phone.',
+      'Uninstall any unauthorized APK or screen-sharing application immediately.'
+    ],
+    emergencyHelpline: 'National Cyber Crime Helpline: 1930 (Toll-Free 24x7) | cybercrime.gov.in'
+  },
+  money_recovery: {
+    advice: `### 💰 How Money Recovery Works (Sec. 91 & 457 CrPC)
+- **Bank lien freeze (Section 91 CrPC)**: Once reported to 1930, cyber police and bank nodal officers place an immediate legal lien on the fraudster's beneficiary accounts to halt ATM withdrawals.
+- **Obtain police lien acknowledgment**: Your Investigating Officer logs the frozen amount and issues an official Bank Lien Confirmation Notice along with your NCRP acknowledgment docket.
+- **Judicial restitution (Section 457 CrPC)**: File a petition under Section 457 CrPC in your jurisdictional Magistrate Court; upon verification, the court directs the beneficiary bank to reverse the frozen funds directly into your verified bank account.`,
+    keySteps: [
+      'Obtain the Bank Lien Reference number from your Investigating Officer.',
+      'Submit a Section 457 CrPC application before the Cyber Crime Judicial Magistrate.',
+      'Beneficiary bank remits frozen funds back to your original bank account.'
+    ],
+    emergencyHelpline: 'National Cyber Crime Helpline: 1930 (Toll-Free 24x7) | cybercrime.gov.in'
+  },
+  digital_arrest: {
+    advice: `### ⚖️ Is "Digital Arrest" Real?
+- **"Digital Arrest" does not exist in Indian law**: No government or law enforcement agency (CBI, ED, NIA, State Police, Customs, or TRAI) ever arrests citizens over Skype, WhatsApp, or video calls.
+- **Government agencies never demand video surveillance**: Legitimate officers never demand you stay on camera, isolate yourself in a room, or transfer funds to a "government verification account" or "RBI security locker."
+- **Immediate action**: Disconnect the video call immediately, do not transfer any money, and report the caller's phone number and screenshots directly to 1930 or cybercrime.gov.in.`,
+    keySteps: [
+      'Hang up the video call immediately — no legitimate agency operates over Skype/WhatsApp.',
+      'Never transfer money to any "clearance", "escrow", or "verification" account.',
+      'Report the caller phone number, Skype ID, and screenshots to 1930.'
+    ],
+    emergencyHelpline: 'National Cyber Crime Helpline: 1930 (Toll-Free 24x7) | cybercrime.gov.in'
+  }
+};
+
 /**
- * Citizen Cyber Advisor - Gemini AI assistance for cybercrime victims
+ * Fast cache matcher for the 4 core citizen queries. Returns in <1ms.
+ */
+export function getCachedCitizenQuery(question: string) {
+  const q = question.toLowerCase().trim();
+
+  // 1. Golden hour query
+  if (
+    q.includes('right now') ||
+    q.includes('what should i do') ||
+    q.includes('golden hour') ||
+    q.includes('just got scammed') ||
+    q.includes('immediate step') ||
+    q.includes('emergency action')
+  ) {
+    return CITIZEN_CACHE.golden_hour;
+  }
+
+  // 2. Bank and UPI security
+  if (
+    (q.includes('secure') && (q.includes('bank') || q.includes('upi'))) ||
+    q.includes('how to secure bank') ||
+    q.includes('protect upi') ||
+    q.includes('block upi') ||
+    q.includes('disable internet banking') ||
+    q.includes('de-link upi') ||
+    q.includes('stop unauthorized')
+  ) {
+    return CITIZEN_CACHE.bank_security;
+  }
+
+  // 3. Money recovery
+  if (
+    q.includes('money recovery') ||
+    q.includes('recover money') ||
+    q.includes('how does money recovery work') ||
+    q.includes('section 91') ||
+    q.includes('section 457') ||
+    q.includes('frozen funds') ||
+    q.includes('sent back to my bank') ||
+    q.includes('money back') ||
+    q.includes('refund')
+  ) {
+    return CITIZEN_CACHE.money_recovery;
+  }
+
+  // 4. Digital Arrest
+  if (
+    q.includes('digital arrest') ||
+    q.includes('cbi') ||
+    q.includes('skype') ||
+    q.includes('contraband') ||
+    q.includes('parcel with illegal') ||
+    q.includes('video call arrest') ||
+    q.includes('fake arrest')
+  ) {
+    return CITIZEN_CACHE.digital_arrest;
+  }
+
+  return null;
+}
+
+/**
+ * Citizen Cyber Advisor - Gemini AI assistance for cybercrime victims.
+ * Caches common queries (<1s) and bounds model responses to 3-5 concise sentences with bullet points (<3s).
  */
 export async function generateVictimAiAdvice(
   question: string,
@@ -531,6 +653,15 @@ export async function generateVictimAiAdvice(
     status?: string;
   }
 ): Promise<{ advice: string; keySteps: string[]; emergencyHelpline: string; timestamp: string }> {
+  // Check instant cache first (<10ms response)
+  const cached = getCachedCitizenQuery(question);
+  if (cached) {
+    return {
+      ...cached,
+      timestamp: new Date().toISOString()
+    };
+  }
+
   const geminiApiKey = process.env.GEMINI_API_KEY;
 
   if (geminiApiKey) {
@@ -543,33 +674,28 @@ export async function generateVictimAiAdvice(
           }
         }
       });
-      const prompt = `You are the Official AI Citizen Cybercrime Advisor for the Ministry of Home Affairs (MHA) & Indian Cybercrime Coordination Centre (I4C), National Cyber Crime Reporting Portal (cybercrime.gov.in).
-A citizen who is a victim of cyber fraud or scam is asking for immediate guidance.
 
-Citizen's Question: "${question}"
+      const prompt = `You are the Official AI Citizen Cybercrime Advisor for the Ministry of Home Affairs (MHA) & Indian Cybercrime Coordination Centre (I4C), National Cyber Crime Reporting Portal (cybercrime.gov.in).
+A citizen victim asks: "${question}"
 ${
   complaintContext
-    ? `Citizen's Active Case Context:
-- Complaint ID: ${complaintContext.complaintId || 'N/A'}
-- Fraud Type: ${complaintContext.fraudType || 'N/A'}
-- Amount Lost: ₹${complaintContext.amountLost?.toLocaleString('en-IN') || 'N/A'}
-- Bank: ${complaintContext.bankName || 'N/A'}
-- Current Status: ${complaintContext.status || 'N/A'}`
+    ? `Citizen Case Context: Case ${complaintContext.complaintId || 'N/A'}, Fraud: ${complaintContext.fraudType || 'N/A'}, Amount: ₹${complaintContext.amountLost?.toLocaleString('en-IN') || 'N/A'}, Bank: ${complaintContext.bankName || 'N/A'}`
     : ''
 }
 
-Provide calm, empathetic, and strictly authoritative legal/technical advice tailored to Indian cyber laws and banking regulations.
-Address:
-1. Immediate actions to protect remaining funds ("Golden Hour" response).
-2. How to formally freeze beneficiary/mule accounts via Bank Nodal Officer & 1930.
-3. Relevant Indian legal procedures (RBI 2017 Customer Protection circular on Zero Liability, Section 91 CrPC freeze, Section 457 CrPC court release order for recovering seized money).
-4. Concrete steps the citizen must take right now.
-
-Format your response in structured, clean Markdown with bullet points, bold headings, and clear action items.`;
+STRICT CONSTRAINTS:
+1. Limit your entire answer to 3 to 5 concise sentences.
+2. Use clean bullet points for actionable steps.
+3. Avoid long legal dissertations or legal definitions unless explicitly requested.
+4. Keep the tone calm, authoritative, and helpful under Indian cyber laws & banking regulations.`;
 
       const response = await ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-        contents: prompt
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+        config: {
+          maxOutputTokens: 320,
+          temperature: 0.2
+        }
       });
 
       if (response && response.text) {
@@ -578,111 +704,120 @@ Format your response in structured, clean Markdown with bullet points, bold head
           keySteps: [
             'Dial 1930 immediately to log transaction with National Cyber Financial Fraud Reporting System.',
             'Notify your bank nodal cyber desk to freeze netbanking, UPI VPAs, and issue dispute reference (UTR).',
-            'File/update detailed complaint on cybercrime.gov.in attaching UTR, screenshots, and suspect mobile/UPI details.',
-            'Obtain Section 91 CrPC bank freeze acknowledgment to claim funds under Section 457 CrPC.'
+            'File/update detailed complaint on cybercrime.gov.in attaching UTR, screenshots, and suspect mobile/UPI details.'
           ],
           emergencyHelpline: 'National Cyber Crime Helpline: 1930 (Toll-Free 24x7) | cybercrime.gov.in',
           timestamp: new Date().toISOString()
         };
       }
     } catch (err) {
-      console.warn('Gemini victim advisor API call failed, falling back to specialized expert guidelines:', err);
+      console.warn('Gemini victim advisor API call failed, falling back to specialized guidelines:', err);
     }
   }
 
-  // Authoritative fallback response if API key is not configured or fails
-  const q = question.toLowerCase();
-  let advice = '';
-  const keySteps: string[] = [];
+  // Fallback concise response
+  const fallback = CITIZEN_CACHE.golden_hour;
+  return {
+    ...fallback,
+    timestamp: new Date().toISOString()
+  };
+}
 
-  if (q.includes('right now') || q.includes('first') || q.includes('immediate') || q.includes('what should i do')) {
-    advice = `### 🚨 Immediate "Golden Hour" Protocol (First 2 to 24 Hours)
-
-Cyber fraudsters rapidly split and siphon stolen funds through multi-layer mule accounts to ATM cash-out clusters within 1 to 3 hours. Take these actions immediately:
-
-1. **Call Toll-Free 1930 Immediately**:
-   - Report the incident to the **National Cyber Financial Fraud Reporting and Management System (NCTFRS)** managed by MHA/I4C.
-   - Have your **Transaction ID / UTR**, **Debit Bank Name**, and **Suspect UPI ID / Account Number** ready.
-   - The 1930 operator transmits an automated API freeze signal to the beneficiary bank to lock the funds before ATM withdrawal.
-
-2. **Contact Your Bank's Nodal Cyber Desk**:
-   - Request an immediate **emergency hotlist / debit freeze** on your compromised card and netbanking credentials.
-   - Lodge a formal dispute under the **RBI Charter on Customer Protection (Zero Liability for unauthorized electronic transactions)** reported within 3 days.
-
-3. **Preserve Digital Evidence**:
-   - Capture unaltered screenshots of the debit SMS, payment gateway receipt with UTR, WhatsApp chats, and caller phone numbers.
-   - Do NOT delete call recordings or chat transcripts.`;
-
-    keySteps.push(
-      'Dial 1930 within 2 hours of the unauthorized transaction.',
-      'Request your bank branch to issue an Incident Reference and debit freeze.',
-      'Submit all transaction UTR numbers to the National Cyber Crime Portal.'
-    );
-  } else if (q.includes('secure') || q.includes('bank account') || q.includes('upi') || q.includes('freeze')) {
-    advice = `### 🛡️ How to Secure Your Bank Account & Block UPI VPAs
-
-If your credentials, OTP, or device was compromised:
-
-1. **Immediate UPI & Netbanking Lockdown**:
-   - Log in to your bank's official mobile app or visit your nearest branch to **disable UPI transactions** and Netbanking access temporarily.
-   - De-link all connected UPI apps (Google Pay, PhonePe, Paytm, BHIM) by revoking device tokens in bank security settings.
-
-2. **Change Critical Security Credentials**:
-   - Change your ATM Debit Card PIN at an authorized ATM kiosk.
-   - Change your Netbanking login password and transaction password from a clean, uncompromised device.
-   - Reset your email account password and enable **Two-Factor Authentication (2FA)** via Authenticator app (not SMS).
-
-3. **Device Hygiene & APK Removal**:
-   - If you downloaded any remote desktop app (AnyDesk, TeamViewer QuickSupport, RustDesk) or an unknown APK via WhatsApp, **uninstall it immediately** and perform a factory reset if necessary.`;
-
-    keySteps.push(
-      'Disable netbanking and de-link UPI VPAs via mobile banking security settings.',
-      'Change ATM PIN, banking passwords, and email 2FA from a separate clean phone.',
-      'Uninstall any unauthorized APK or screen-sharing application immediately.'
-    );
-  } else if (q.includes('money back') || q.includes('recover') || q.includes('refund') || q.includes('frozen')) {
-    advice = `### 💰 How to Recover Money From Frozen Mule Accounts
-
-When the cyber police or 1930 system issues a freeze under Section 91 CrPC, the funds are held securely in a bank lien. Follow these legal steps to get your funds restored:
-
-1. **Obtain the FIR & Bank Lien Notice**:
-   - Collect your formal **FIR acknowledgment slip** from the National Cyber Crime Reporting Portal.
-   - Request your Investigating Officer (IO) to provide the **Bank Lien Confirmation Reference** (the amount frozen in the suspect's bank account).
-
-2. **Application Under Section 457 CrPC (Release of Seized Property)**:
-   - File an application before the jurisdictional Chief Judicial Magistrate / Metropolitan Magistrate court under **Section 457 of the Code of Criminal Procedure (CrPC)**.
-   - Submit proof of ownership: Bank passbook statement showing the fraudulent deduction and UTR match.
-
-3. **Judicial Restitution Order to Bank**:
-   - The magistrate verifies that no conflicting claims exist on the seized funds and directs the beneficiary bank to reverse the funds directly into your verified bank account via NEFT/RTGS.`;
-
-    keySteps.push(
-      'Collect Bank Lien Reference from your Investigating Officer (IO).',
-      'Submit Section 457 CrPC application before the Cyber Crime Judicial Magistrate.',
-      'Beneficiary bank remits frozen funds back to your original bank account.'
-    );
-  } else {
-    advice = `### 🛡️ Cyber Crime Safety & Legal Recourse Advisory
-
-Thank you for reaching out to the MHA Cyber Crime Citizen Advisory.
-
-**Important Guidelines for Cyber Fraud Victims**:
-- **Zero Liability Protection**: As per Reserve Bank of India (RBI) circular dated July 6, 2017, unauthorized electronic transactions reported within 3 days carry zero liability for the customer if there is no contributory negligence.
-- **Official Law Enforcement Only**: No police officer or government official will ever ask you to transfer funds to a "government verification account" or conduct a "digital arrest" via Skype or WhatsApp.
-- **Preserve Digital Artifacts**: Never delete SMS records, payment gateway receipts, or suspect phone numbers. Upload them directly into the **Evidence Center** of your victim dashboard.
-- **Track Status Regularly**: Check your **Complaint Tracker** tab to monitor real-time updates as your Investigating Officer issues Section 91 CrPC notices and locks mule cash-out points.`;
-
-    keySteps.push(
-      'Never send money to any account claiming to be a "RBI verification" or "police clear" account.',
-      'Report new evidence or suspect contact numbers through your Evidence Center tab.',
-      'Check your Complaint Tracker to monitor bank freeze liens and recovery progress.'
-    );
+/**
+ * Streamed version of Citizen Cyber Advisor (SSE support)
+ */
+export async function* generateVictimAiAdviceStream(
+  question: string,
+  complaintContext?: {
+    complaintId?: string;
+    fraudType?: string;
+    amountLost?: number;
+    bankName?: string;
+    status?: string;
+  }
+): AsyncGenerator<{ chunk?: string; done?: boolean; fullText?: string; keySteps?: string[]; emergencyHelpline?: string }> {
+  // Check instant cache first
+  const cached = getCachedCitizenQuery(question);
+  if (cached) {
+    // Deliver cached response rapidly in small chunks to simulate natural flow or immediate burst
+    yield { chunk: cached.advice };
+    yield {
+      done: true,
+      fullText: cached.advice,
+      keySteps: cached.keySteps,
+      emergencyHelpline: cached.emergencyHelpline
+    };
+    return;
   }
 
-  return {
-    advice,
-    keySteps,
-    emergencyHelpline: 'National Cyber Crime Helpline: 1930 (Toll-Free 24x7) | cybercrime.gov.in',
-    timestamp: new Date().toISOString()
+  const geminiApiKey = process.env.GEMINI_API_KEY;
+
+  if (geminiApiKey) {
+    try {
+      const ai = new GoogleGenAI({
+        apiKey: geminiApiKey,
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build'
+          }
+        }
+      });
+
+      const prompt = `You are the Official AI Citizen Cybercrime Advisor for the Ministry of Home Affairs (MHA) & Indian Cybercrime Coordination Centre (I4C), National Cyber Crime Reporting Portal (cybercrime.gov.in).
+A citizen victim asks: "${question}"
+${
+  complaintContext
+    ? `Citizen Case Context: Case ${complaintContext.complaintId || 'N/A'}, Fraud: ${complaintContext.fraudType || 'N/A'}, Amount: ₹${complaintContext.amountLost?.toLocaleString('en-IN') || 'N/A'}, Bank: ${complaintContext.bankName || 'N/A'}`
+    : ''
+}
+
+STRICT CONSTRAINTS:
+1. Limit your entire answer to 3 to 5 concise sentences.
+2. Use clean bullet points for actionable steps.
+3. Avoid long legal dissertations or legal definitions unless explicitly requested.
+4. Keep the tone calm, authoritative, and helpful under Indian cyber laws & banking regulations.`;
+
+      const responseStream = await ai.models.generateContentStream({
+        model: 'gemini-2.5-flash',
+        contents: prompt,
+        config: {
+          maxOutputTokens: 320,
+          temperature: 0.2
+        }
+      });
+
+      let accumulated = '';
+      for await (const chunk of responseStream) {
+        const text = chunk.text;
+        if (text) {
+          accumulated += text;
+          yield { chunk: text };
+        }
+      }
+
+      yield {
+        done: true,
+        fullText: accumulated,
+        keySteps: [
+          'Dial 1930 immediately to log transaction with National Cyber Financial Fraud Reporting System.',
+          'Notify your bank nodal cyber desk to freeze netbanking, UPI VPAs, and issue dispute reference (UTR).',
+          'File/update detailed complaint on cybercrime.gov.in attaching UTR, screenshots, and suspect mobile/UPI details.'
+        ],
+        emergencyHelpline: 'National Cyber Crime Helpline: 1930 (Toll-Free 24x7) | cybercrime.gov.in'
+      };
+      return;
+    } catch (err) {
+      console.warn('Gemini stream failed, falling back to cached response:', err);
+    }
+  }
+
+  // Fallback stream
+  const fallback = CITIZEN_CACHE.golden_hour;
+  yield { chunk: fallback.advice };
+  yield {
+    done: true,
+    fullText: fallback.advice,
+    keySteps: fallback.keySteps,
+    emergencyHelpline: fallback.emergencyHelpline
   };
 }

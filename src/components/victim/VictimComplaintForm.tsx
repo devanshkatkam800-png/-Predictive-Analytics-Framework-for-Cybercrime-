@@ -175,24 +175,24 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-300">
       {/* Official Form Header */}
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs">
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-400 flex items-center justify-center font-bold">
+          <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
             <FilePlus className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">
                 Form NCRP-01 &bull; Citizen Cyber Incident Intake
               </span>
-              <span className="px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[10px] font-bold">
+              <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-bold">
                 1930 Linked
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900">
               Lodge Cybercrime & Financial Fraud Complaint
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-xs text-slate-500 mt-1">
               Submitting this form immediately generates a high-priority 1930 bank freeze alert and triggers the AI predictive cash withdrawal engine.
             </p>
           </div>
@@ -202,16 +202,16 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
       {/* Complaint Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {error && (
-          <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs flex items-center gap-2.5">
+          <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2.5">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span className="font-medium">{error}</span>
           </div>
         )}
 
         {/* Section 1: Incident & Fraud Classification */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-            <span className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[11px] font-black flex items-center justify-center">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+          <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 pb-3">
+            <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-black flex items-center justify-center">
               1
             </span>
             <span>Fraud Incident Classification</span>
@@ -219,13 +219,13 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Category of Cyber Fraud <span className="text-rose-500">*</span>
               </label>
               <select
                 value={fraudType}
                 onChange={(e) => setFraudType(e.target.value)}
-                className="w-full px-3 py-2.5 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2.5 text-xs font-medium rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               >
                 {fraudTypes.map((t) => (
                   <option key={t} value={t}>
@@ -236,7 +236,7 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Total Amount Siphoned (INR ₹) <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
@@ -248,7 +248,7 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
                   value={amountLost}
                   onChange={(e) => setAmountLost(e.target.value)}
                   placeholder="e.g. 85000"
-                  className="w-full pl-8 pr-3 py-2.5 text-xs font-bold rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                  className="w-full pl-8 pr-3 py-2.5 text-xs font-bold rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
             </div>
@@ -256,7 +256,7 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Date of Fraudulent Transaction <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
@@ -266,13 +266,13 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
                   required
                   value={transactionDate}
                   onChange={(e) => setTransactionDate(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Approximate Time of Incident <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
@@ -282,7 +282,7 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
                   required
                   value={transactionTime}
                   onChange={(e) => setTransactionTime(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
             </div>
@@ -290,9 +290,9 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
         </div>
 
         {/* Section 2: Financial & Suspect Routing Trail */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-            <span className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[11px] font-black flex items-center justify-center">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+          <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 pb-3">
+            <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-black flex items-center justify-center">
               2
             </span>
             <span>Bank & Transaction Routing Details</span>
@@ -300,13 +300,13 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Your Debited Bank <span className="text-rose-500">*</span>
               </label>
               <select
                 value={bankName}
                 onChange={(e) => setBankName(e.target.value)}
-                className="w-full px-3 py-2.5 text-xs font-medium rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2.5 text-xs font-medium rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               >
                 {banks.map((b) => (
                   <option key={b} value={b}>
@@ -317,7 +317,7 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Your Debited Account / Card (Last 4 digits or Full)
               </label>
               <input
@@ -325,14 +325,14 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
                 value={accountNumber}
                 onChange={(e) => setAccountNumber(e.target.value)}
                 placeholder="e.g. XXXX-XXXX-7812"
-                className="w-full px-3 py-2.5 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2.5 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Suspect / Beneficiary UPI ID (VPA)
               </label>
               <input
@@ -340,12 +340,12 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
                 value={upiId}
                 onChange={(e) => setUpiId(e.target.value)}
                 placeholder="e.g. fraudulent-user@icici"
-                className="w-full px-3 py-2.5 text-xs font-mono rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2.5 text-xs font-mono rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
                 Transaction ID / 12-Digit UTR Number <span className="text-rose-500">*</span>
               </label>
               <input
@@ -354,23 +354,23 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
                 value={transactionId}
                 onChange={(e) => setTransactionId(e.target.value)}
                 placeholder="e.g. UTR428198271891"
-                className="w-full px-3 py-2.5 text-xs font-mono font-bold rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2.5 text-xs font-mono font-bold rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500"
               />
             </div>
           </div>
         </div>
 
         {/* Section 3: Incident Narrative Description */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-            <span className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[11px] font-black flex items-center justify-center">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+          <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 pb-3">
+            <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-black flex items-center justify-center">
               3
             </span>
             <span>Chronological Description of the Scam</span>
           </h2>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
               Detailed Narrative <span className="text-rose-500">*</span>
             </label>
             <textarea
@@ -379,16 +379,16 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
               value={complaintDescription}
               onChange={(e) => setComplaintDescription(e.target.value)}
               placeholder="State what happened chronologically: How the scammer contacted you (SMS, WhatsApp, phone call, Telegram), what links or APKs were downloaded, what OTPs were requested..."
-              className="w-full px-3 py-2.5 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500 leading-relaxed"
+              className="w-full px-3 py-2.5 text-xs rounded-xl border border-slate-300 bg-white text-slate-900 focus:outline-hidden focus:ring-2 focus:ring-emerald-500 leading-relaxed"
             />
           </div>
         </div>
 
         {/* Section 4: Evidence Center & Document Upload */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-            <h2 className="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
-              <span className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[11px] font-black flex items-center justify-center">
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-black flex items-center justify-center">
                 4
               </span>
               <span>Evidence Upload (Screenshots, PDFs, Audio)</span>
@@ -398,12 +398,12 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
             </span>
           </div>
 
-          <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-emerald-500 rounded-2xl p-6 text-center transition-colors bg-slate-50/50 dark:bg-slate-800/30">
+          <div className="border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-2xl p-6 text-center transition-colors bg-slate-50/50">
             <Upload className="w-8 h-8 text-emerald-600 mx-auto mb-2" />
-            <p className="text-xs font-bold text-slate-800 dark:text-slate-200">
+            <p className="text-xs font-bold text-slate-800">
               Drag and drop evidence files or click to browse
             </p>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-[11px] text-slate-500 mt-1">
               Supports: Bank SMS screenshots (.png/.jpg), Bank Passbook/Statements (.pdf), Scammer Call Recordings (.mp3/.wav)
             </p>
             <label className="mt-3 inline-block px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs cursor-pointer transition-colors">
@@ -421,14 +421,14 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
           {/* Attached Files List */}
           {uploadedFiles.length > 0 && (
             <div className="space-y-2 pt-2">
-              <h3 className="text-xs font-bold text-slate-700 dark:text-slate-300">
+              <h3 className="text-xs font-bold text-slate-700">
                 Attached Digital Evidence:
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {uploadedFiles.map((file) => (
                   <div
                     key={file.id}
-                    className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-between gap-3 text-xs"
+                    className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 text-xs"
                   >
                     <div className="flex items-center gap-2.5 truncate">
                       {file.fileType === 'image' && <ImageIcon className="w-4 h-4 text-blue-500 shrink-0" />}
@@ -436,7 +436,7 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
                       {file.fileType === 'audio' && <FileAudio className="w-4 h-4 text-amber-500 shrink-0" />}
                       {file.fileType === 'document' && <FileText className="w-4 h-4 text-slate-500 shrink-0" />}
                       <div className="truncate">
-                        <div className="font-semibold text-slate-900 dark:text-white truncate">
+                        <div className="font-semibold text-slate-900 truncate">
                           {file.fileName}
                         </div>
                         <div className="text-[10px] text-slate-400">
@@ -448,7 +448,7 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
                     <button
                       type="button"
                       onClick={() => removeFile(file.id)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -460,8 +460,8 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
         </div>
 
         {/* Legal Declaration */}
-        <div className="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 space-y-1.5">
-          <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+        <div className="p-4 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-600 space-y-1.5">
+          <div className="font-bold text-slate-900 flex items-center gap-1.5">
             <Lock className="w-3.5 h-3.5 text-emerald-600" />
             <span>Statutory Declaration under IT Act 2000 & Section 91 CrPC</span>
           </div>
@@ -475,7 +475,7 @@ export const VictimComplaintForm: React.FC<VictimComplaintFormProps> = ({ onSucc
           <button
             type="button"
             onClick={onCancel}
-            className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-xs hover:bg-slate-100 transition-colors cursor-pointer"
           >
             Cancel
           </button>

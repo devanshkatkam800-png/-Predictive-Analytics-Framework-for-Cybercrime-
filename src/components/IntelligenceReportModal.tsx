@@ -185,31 +185,31 @@ export const IntelligenceReportModal: React.FC<IntelligenceReportModalProps> = (
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-3xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <div className="bg-white border border-slate-200 rounded-2xl max-w-3xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Official Header */}
-        <div className="border-b border-slate-200 dark:border-slate-800 pb-4 mb-5">
+        <div className="border-b border-slate-200 pb-4 mb-5">
           <div className="flex items-center gap-2 mb-1">
-            <Shield className="w-5 h-5 text-blue-700 dark:text-blue-400" />
-            <span className="text-[11px] font-bold uppercase tracking-widest text-blue-700 dark:text-blue-400">
+            <Shield className="w-5 h-5 text-blue-700" />
+            <span className="text-[11px] font-bold uppercase tracking-widest text-blue-700">
               MINISTRY OF HOME AFFAIRS (MHA) &bull; I4C
             </span>
           </div>
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-xl font-bold text-slate-900">
             {report.title}
           </h2>
-          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mt-1">
-            <span>Ref: <strong className="font-mono text-slate-700 dark:text-slate-300">{report.reportId}</strong></span>
+          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 mt-1">
+            <span>Ref: <strong className="font-mono text-slate-700">{report.reportId}</strong></span>
             <span>&bull;</span>
-            <span>Case: <strong className="font-mono text-slate-700 dark:text-slate-300">{report.complaintId}</strong></span>
+            <span>Case: <strong className="font-mono text-slate-700">{report.complaintId}</strong></span>
             <span>&bull;</span>
             <span>Generated: {new Date(report.generatedAt).toLocaleString()}</span>
           </div>
@@ -217,25 +217,25 @@ export const IntelligenceReportModal: React.FC<IntelligenceReportModalProps> = (
 
         {/* Incident Summary & Risk Matrix */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs mb-5">
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
             <div className="text-[10px] text-slate-400 uppercase font-semibold">Incident Loss</div>
-            <div className="text-base font-extrabold text-slate-900 dark:text-white mt-0.5">
+            <div className="text-base font-extrabold text-slate-900 mt-0.5">
               ₹{(complaint?.amountLost || 0).toLocaleString('en-IN')}
             </div>
             <div className="text-[11px] text-slate-500 truncate">{complaint?.fraudType}</div>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
             <div className="text-[10px] text-slate-400 uppercase font-semibold">Risk Evaluation</div>
-            <div className="text-base font-extrabold text-rose-600 dark:text-rose-400 mt-0.5">
+            <div className="text-base font-extrabold text-rose-600 mt-0.5">
               {report.riskScore} / 100 ({report.riskLevel})
             </div>
             <div className="text-[11px] text-slate-500">Confidence: {report.confidenceScore}%</div>
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
             <div className="text-[10px] text-slate-400 uppercase font-semibold">Origin & Bank</div>
-            <div className="text-xs font-bold text-slate-900 dark:text-white mt-0.5 truncate">
+            <div className="text-xs font-bold text-slate-900 mt-0.5 truncate">
               {complaint?.victimCity}, {complaint?.victimState}
             </div>
             <div className="text-[11px] text-slate-500 truncate">{complaint?.bankName}</div>
@@ -245,19 +245,19 @@ export const IntelligenceReportModal: React.FC<IntelligenceReportModalProps> = (
         {/* Report Narrative Summary */}
         <div className="mb-5 space-y-3 text-xs">
           <div>
-            <h3 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] mb-1">
+            <h3 className="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-1">
               Operational Intelligence Summary
             </h3>
-            <p className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 leading-relaxed">
+            <p className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 leading-relaxed">
               {report.reportSummary}
             </p>
           </div>
 
           <div>
-            <h3 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] mb-1">
+            <h3 className="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-1">
               Syndicate Modus Operandi & Pattern Analysis
             </h3>
-            <p className="p-3 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/70 dark:border-blue-900/50 text-slate-700 dark:text-slate-300 leading-relaxed">
+            <p className="p-3 rounded-xl bg-blue-50/70 border border-blue-200/70 text-slate-700 leading-relaxed">
               {report.patternAnalysis}
             </p>
           </div>
@@ -265,12 +265,12 @@ export const IntelligenceReportModal: React.FC<IntelligenceReportModalProps> = (
 
         {/* Forecasted Zones Table */}
         <div className="mb-5">
-          <h3 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] mb-2">
+          <h3 className="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-2">
             Top Forecasted Withdrawal Locations & Corridors
           </h3>
-          <div className="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+          <div className="border border-slate-200 rounded-xl overflow-hidden">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-semibold text-[10px] uppercase">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold text-[10px] uppercase">
                 <tr>
                   <th className="p-2.5">Predicted Zone</th>
                   <th className="p-2.5">City / Region</th>
@@ -279,13 +279,13 @@ export const IntelligenceReportModal: React.FC<IntelligenceReportModalProps> = (
                   <th className="p-2.5">Timeframe</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+              <tbody className="divide-y divide-slate-100 text-slate-700">
                 {(report.topPredictedZones || []).map((zone, i) => (
-                  <tr key={i} className="hover:bg-slate-50 dark:hover:bg-slate-800/30">
-                    <td className="p-2.5 font-bold text-slate-900 dark:text-white">{zone.zoneName}</td>
+                  <tr key={i} className="hover:bg-slate-50">
+                    <td className="p-2.5 font-bold text-slate-900">{zone.zoneName}</td>
                     <td className="p-2.5">{zone.city}, {zone.state}</td>
                     <td className="p-2.5">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 dark:bg-rose-950 text-rose-700 dark:text-rose-300">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-rose-100 text-rose-700">
                         {zone.probability}%
                       </span>
                     </td>
@@ -307,14 +307,14 @@ export const IntelligenceReportModal: React.FC<IntelligenceReportModalProps> = (
 
         {/* Recommendations */}
         <div className="mb-6">
-          <h3 className="font-bold text-slate-900 dark:text-white uppercase tracking-wider text-[11px] mb-2">
+          <h3 className="font-bold text-slate-900 uppercase tracking-wider text-[11px] mb-2">
             Actionable Intervention Directives
           </h3>
           <div className="space-y-1.5 text-xs">
             {(report.investigationRecommendations || []).map((rec, i) => (
               <div
                 key={i}
-                className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 flex items-start gap-2"
+                className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 flex items-start gap-2"
               >
                 <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                 <span>{rec}</span>
@@ -324,16 +324,16 @@ export const IntelligenceReportModal: React.FC<IntelligenceReportModalProps> = (
         </div>
 
         {/* Footer Actions */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-200">
           <div className="text-[11px] text-slate-400">
-            Officer Organization: <strong className="text-slate-700 dark:text-slate-300">{report.officerOrganization}</strong>
+            Officer Organization: <strong className="text-slate-700">{report.officerOrganization}</strong>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={handleDownloadCsv}
-              className="px-3.5 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-1.5 transition-colors"
+              className="px-3.5 py-2 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 flex items-center gap-1.5 transition-colors"
             >
               <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
               <span>Export CSV</span>
